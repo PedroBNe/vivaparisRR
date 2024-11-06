@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Arrow = ({ stroke = "#ffffff", width = 45, height = 45, rotate = 0 }) => (
+const Arrow = ({ stroke = "#ffffff", width = 45, height = 45, rotate = 0}) => (
     <svg
         style={{ transform: `rotate(${rotate}deg)` }}        
         viewBox="0 0 24 24"

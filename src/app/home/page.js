@@ -185,30 +185,45 @@ const galery = [
     {
         destino: "Museu do Louvre",
         local: "Paris, França",
-        estilo: "Clássico",
-        img: Imagem
+        trips: 34
+    },
+    {
+        destino: "Museu d’Orsay",
+        local: "Paris, França",
+        trips: 34
+    },
+    {
+        destino: "Museu Rodin",
+        local: "Paris, França",
+        trips: 34
+    },
+    {
+        destino: "Montmartre",
+        local: "Paris, França",
+        trips: 34
+    },
+    {
+        destino: "Castelo de Versalhes",
+        local: "Paris, França",
+        trips: 34
     },
 ]
 
 const GaleryCard = () => (
-    <div
-        className="flex transition-transform duration-500"
-        style={{ transform: `translateX(-${currentIndex * 340}px)` }}
-    >
-        {destination.map((destiny, index) => (
-            <div key={index} className="w-[327px] h-[452px] p-2 rounded-xl flex-shrink-0 mx-2 relative text-white">
-                <div className="w-[327px] h-[452px] bg-black rounded-xl p-2 bg-opacity-40 flex flex-col gap-4 items-center justify-end relative z-20">
-                    <div className="flex flex-col items-center">
-                        <h3 className="text-2xl font-bold">{destiny.destino}</h3>
-                        {destiny.estilo && <p>{destiny.estilo}</p>}
-                        {destiny.rua && <p>{destiny.rua}</p>}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {galery.map((galery, index) => (
+            <div key={index} className="w-[327px] h-[300px] p-2 rounded-xl flex-shrink-0 mx-2 relative text-white">
+                <div className="w-[327px] h-[300px] bg-black text-start rounded-xl p-2 bg-opacity-40 flex flex-col gap-2 items-start justify-end relative z-20">
+                    <div className="flex flex-col">
+                        <h3 className="text-2xl font-bold">{galery.destino}</h3>
+                        <p>{galery.local}</p>
                     </div>
                     <div className="flex items-center text-sm gap-2">
-                        <French />
-                        <p>{destiny.local}</p>
+                        <p>Viajens: </p>
+                        {galery.trips}
                     </div>
                 </div>
-                <Image src={destiny.img} alt={destiny.destino} className="w-[327px] h-[452px] absolute top-2 opacity-90 rounded-xl z-10" />
+                <Image src={galery.img} alt={galery.destino} className="w-[327px] h-[300px] absolute top-2 opacity-90 rounded-xl z-10" />
             </div>
         ))}
     </div>
@@ -286,11 +301,30 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center items-center text-[#0E3D4D]">
+            <div className="h-[100vh] flex justify-center items-start text-[#0E3D4D]">
                 <div className="flex flex-col justify-center items-center gap-4">
                     <p className="text-lg font-semibold">Galeria de viajens</p>
                     <h2 className="text-5xl font-bold">Viajens feitas</h2>
+                    <div className="flex flex-col gap-[100px] items-center">
+                        <GaleryCard />
+                        <Link href={''}>
+                            <MyButton className="flex items-center gap-2">
+                                Ver todas as viajens <Arrow stroke="#000000" width={40} height={40} />
+                            </MyButton>
+                        </Link>
+                    </div>
                 </div>
+            </div>
+            <div className="h-[50vh] flex flex-col gap-[80px] justify-center items-center bg-[#112F38]">
+                <div className="flex flex-col gap-4 justify-center items-center text-white text-5xl font-bold">
+                    <h1>Pronto para viajar?</h1>
+                    <p>Entre em contato com a gente</p>
+                </div>
+                <Link href={''}>
+                    <MyButton className="flex items-center gap-2">
+                        Entre em contato <Arrow stroke="#000000" width={20} height={20} />
+                    </MyButton>
+                </Link>
             </div>
         </div>
     )
