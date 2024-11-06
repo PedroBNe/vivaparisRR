@@ -1,28 +1,22 @@
+import { HeaderDashboard } from '@/components/dashboard/header';
+import { CustomSidebar } from '@/components/sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import React from 'react';
 
 export default function DashboardLayout({ children }) {
   return (
     <div className="dashboard-layout">
-      {/* Cabeçalho específico do dashboard */}
-      <header className="dashboard-header">
-        <h1>Dashboard</h1>
-        {/* Navegação ou links específicos do dashboard */}
-        <nav>
-          <a href="/dashboard">Home</a>
-          <a href="/dashboard/settings">Configurações</a>
-          <a href="/dashboard/profile">Perfil</a>
-        </nav>
-      </header>
+      <HeaderDashboard />
 
       {/* Conteúdo do dashboard */}
-      <main className="dashboard-content">
+      <main className="flex">
+      <aside>
+        <SidebarProvider> {/* Envolvendo o CustomSidebar com SidebarProvider */}
+          <CustomSidebar /> 
+        </SidebarProvider>
+      </aside>
         {children}
       </main>
-
-      {/* Rodapé específico do dashboard */}
-      <footer className="dashboard-footer">
-        <p>Footer do Dashboard</p>
-      </footer>
     </div>
   );
 }
