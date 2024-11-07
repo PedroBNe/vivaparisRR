@@ -36,7 +36,7 @@ const nav = [
 
 export default function Header() {
     return(
-        <header className="w-full p-10 px-[130px] bg-transparent flex justify-between text-white absolute">
+        <header className="w-full p-10 px-[130px] bg-transparent flex justify-between text-white absolute z-30">
             <Link href={header.link}>
                 <Image src={header.image} alt="logo" width={150} height={80} />
             </Link>

@@ -7,33 +7,13 @@ import ShieldCheck from "@/assets/ShieldCheck";
 import Arrow from "@/assets/Arrow";
 import { Button } from "@/components/ui/button";
 import MyButton from "@/components/buttons";
-import { useState } from "react";
-import Imagem from '@/assets/teste.jpeg'
+import { useEffect, useState } from "react";
+import Imagem from '@/assets/meuteste.jpeg'
 import Image from "next/image";
 import French from "@/assets/Frech";
 import Viagem from '@/assets/viagem.jpeg'
-
-const infoSite = {
-    colorPrimary: '#f2c249',
-}
-
-const carousel = [
-    {
-        id: 1,
-        title: "Chose a place, activity and time",
-        text: "We help people find co travellers and also structure their travel plans "
-    },
-    {
-        id: 2,
-        title: "Chose a place, activity and time",
-        text: "We help people find co travellers and also structure their travel plans "
-    },
-    {
-        id: 3,
-        title: "Chose a place, activity and time",
-        text: "We help people find co travellers and also structure their travel plans "
-    },
-]
+import Back from '@/assets/eifel.jpeg'; // Background Image 
+import jsonData from '/data.json';
 
 const Card = ({ title, text, id }) => (
     <div className="flex flex-col gap-5 p-5">
@@ -43,33 +23,29 @@ const Card = ({ title, text, id }) => (
     </div>
 )
 
-const travels = [
-    {
-        img: <Airplane stroke={infoSite.colorPrimary} />,
-        title: "Chose a place, activity and time",
-        text: "We help people find co travellers and also structure their travel plans "
-    },
-    {
-        img: <ShieldCheck stroke={infoSite.colorPrimary} />,
-        title: "Chose a place, activity and time",
-        text: "We help people find co travellers and also structure their travel plans "
-    },
-    {
-        img: <Faders fill={infoSite.colorPrimary} />,
-        title: "Chose a place, activity and time",
-        text: "We help people find co travellers and also structure their travel plans "
-    },
-]
+const renderIcon = (iconName, color) => {
+    switch (iconName) {
+        case "Airplane":
+            return <Airplane stroke={color} />;
+        case "ShieldCheck":
+            return <ShieldCheck stroke={color} />;
+        case "Faders":
+            return <Faders fill={color} />;
+        default:
+            return null;
+    }
+};
 
-const TravelsCard = ({ title, text, img }) => (
+const TravelsCard = ({ title, text, img, color }) => (
     <div className="flex flex-col gap-8 p-5">
-        {img}
+        {renderIcon(img, color)}
         <div className="flex flex-col gap-5">
             <h3 className="font-bold">{title}</h3>
             <p>{text}</p>
         </div>
     </div>
-)
+);
+
 
 const destination = [
     {
@@ -230,16 +206,31 @@ const GaleryCard = () => (
 )
 
 export default function Home() {
+    const [banner, setBanner] = useState({});
+    const [carousel, setCarousel] = useState([]);
+    const [travels, setTravels] = useState([]);
+    const [colorPrimary, setColorPrimary] = useState("#f2c249");
+
+    useEffect(() => {
+        setBanner(jsonData[0]?.banner);
+        setCarousel(jsonData[0]?.banner?.carousel || []);
+        setTravels(jsonData[0]?.travels || []);
+        setColorPrimary(jsonData[0]?.colorPrimary ? `#${jsonData[0].colorPrimary.replace('#', '')}` : "#f2c249");
+
+        console.log(banner)
+    }, []);
+
     return(
-        <div className="flex flex-col overflow-hidden">
-            <div className="h-[950px] pt-[200px] px-[130px] flex flex-col gap-[110px] bg-black text-white">
+        <div className="flex flex-col overflow-hidden relative">
+            <Image src={Back} alt="back" width={0} height={0} className="w-full h-[950px] absolute z-10" />
+            <div className={`h-[950px] pt-[200px] px-[130px] flex flex-col gap-[110px] text-white z-20 relative bg-black bg-opacity-50`}>
                 <div className="flex flex-col gap-[90px]">
                     <div className="flex flex-col gap-12">
-                        <h1 className="w-[45%] items-center text-6xl font-bold">Explore o mundo, conquistando pessoas</h1>
-                        <h2>Ajudamos pessoas com seus destinos e viajens</h2>
+                        <h1 className="w-[45%] items-center text-6xl font-bold">{banner.title}</h1>
+                        <h2>{banner.subtitle}</h2>
                     </div>
-                    <Link href={''}>
-                        <MyButton color="f2c249">Saiba mais</MyButton>
+                    <Link href={''} className="w-fit">
+                        <MyButton color={colorPrimary}>Saiba mais</MyButton>
                     </Link>
                 </div>
                 <div>
@@ -259,10 +250,10 @@ export default function Home() {
                     <p>enjoy</p>
                     <p>explore</p>
                 </div>
-                <div className="w-full h-[8vh] bg-[#f2c249] absolute top-0 z-10"></div>
+                <div className={`w-full h-[8vh] bg-[${colorPrimary}] absolute top-0 z-10`}></div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10 p-8 px-[130px]">
                     {travels.map((item) => (
-                        <TravelsCard key={item.id} title={item.title} text={item.text} img={item.img} />
+                        <TravelsCard key={item.id} title={item.title} text={item.text} img={item.img} color={colorPrimary} />
                     ))}
                 </div>
             </div>
