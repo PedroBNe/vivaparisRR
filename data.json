@@ -5,7 +5,7 @@
     "banner": {
       "image": "/banner.png",
       "title": "Explore Paris de uma forma divertida!",
-      "subtitle": "Descubra Paris com Aventuras Inusitadas e Experiências Únicas!",
+      "subtitle": "Descubra Paris com Aventuras Inusitadas e Experiências Únicas!!",
       "carousel": [
         {
           "id": 1,
@@ -111,56 +111,55 @@
       }
     ],
     "galery": [
-        {
-          "id": 1,
-          "destino": "Museu do Louvre",
-          "local": "Paris, França",
-          "img": "/galery/image1.png",
-          "trips": 34
-        },
-        {
-          "id": 2,
-          "destino": "Museu d’Orsay",
-          "local": "Paris, França",
-          "img": "/galery/image2.png",
-          "trips": 34
-        },
-        {
-          "id": 3,
-          "destino": "Museu Rodin",
-          "local": "Paris, França",
-          "img": "/galery/image3.png",
-          "trips": 34
-        },
-        {
-          "id": 4,
-          "destino": "Montmartre",
-          "local": "Paris, França",
-          "img": "/galery/image4.png",
-          "trips": 34
-        },
-        {
-          "id": 5,
-          "destino": "Castelo de Versalhes",
-          "local": "Paris, França",
-          "img": "/galery/image5.png",
-          "trips": 34
-        },
-        {
-          "id": 6,
-          "destino": "Castelo de Versalhes",
-          "local": "Paris, França",
-          "img": "/galery/image6.png",
-          "trips": 34
-        }
+      {
+        "id": 1,
+        "destino": "Museu do Louvre",
+        "local": "Paris, França",
+        "img": "/galery/image1.png",
+        "trips": 34
+      },
+      {
+        "id": 2,
+        "destino": "Museu d’Orsay",
+        "local": "Paris, França",
+        "img": "/galery/image2.png",
+        "trips": 34
+      },
+      {
+        "id": 3,
+        "destino": "Museu Rodin",
+        "local": "Paris, França",
+        "img": "/galery/image3.png",
+        "trips": 34
+      },
+      {
+        "id": 4,
+        "destino": "Montmartre",
+        "local": "Paris, França",
+        "img": "/galery/image4.png",
+        "trips": 34
+      },
+      {
+        "id": 5,
+        "destino": "Castelo de Versalhes",
+        "local": "Paris, França",
+        "img": "/galery/image5.png",
+        "trips": 34
+      },
+      {
+        "id": 6,
+        "destino": "Castelo de Versalhes",
+        "local": "Paris, França",
+        "img": "/galery/image6.png",
+        "trips": 34
+      }
     ],
-    "plan": 
-    {
-        "image": "/plan/viagem.jpeg",
-        "title1": "Planeje Sua Aventura",
-        "subtitle1": "Dicas rápidas para escolher e planejar a viagem dos seus sonhos.",
-        "title2": "Deixe os Especialistas Cuidarem de Tudo",
-        "subtitle2": "Com o planejamento de viagem, personalize e facilite a sua jornada."
+    "plan": {
+      "image": "/plan/viagem.jpeg",
+      "title1": "Planeje Sua Aventura",
+      "subtitle1": "Dicas rápidas para escolher e planejar a viagem dos seus sonhos.",
+      "title2": "Deixe os Especialistas Cuidarem de Tudo",
+      "subtitle2": "Com o planejamento de viagem, personalize e facilite a sua jornada."
     },
     "colorPrimary": "#f2c261",
     "colorSecondary": "#055647"
