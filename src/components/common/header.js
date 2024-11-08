@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import Logo from '@/assets/Ativo 9.png';
-import { usePathname } from "next/navigation";
 
 const header = {
     link: "/home",
@@ -20,14 +19,6 @@ const nav = [
 ];
 
 export default function Header() {
-    const pathname = usePathname();
-
-    // Rotas onde o Header não deve aparecer
-    const hideHeaderRoutes = ["/login", "/register", "/blog"]; 
-
-    // Verifica se a rota atual está na lista de rotas para ocultar o Header
-    if (hideHeaderRoutes.includes(pathname)) return null;
-
     return (
         <header className="w-full p-10 px-[130px] bg-transparent flex justify-between text-white absolute z-30">
             <Link href={header.link}>
