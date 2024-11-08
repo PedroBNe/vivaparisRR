@@ -3,56 +3,45 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import HeaderFixo from '@/components/common/headerFixo'
+import Image from 'next/image'
 
 // Dados de exemplo para os posts do blog
 const featuredPost = {
-  title: "O Futuro da Inteligência Artificial",
-  excerpt: "Explorando as últimas tendências e inovações no campo da IA...",
-  author: {
-    name: "Maria Silva",
-    avatar: "/placeholder.svg?height=40&width=40"
-  },
+  title: "Os Principais Pontos Turísticos de Paris",
+  excerpt: "Descubra os locais mais icônicos de Paris, desde a Torre Eiffel até o Louvre, e aprenda como aproveitar ao máximo cada visita.",
   date: "10 de Junho, 2023",
-  category: "Tecnologia"
-}
+  category: "Turismo",
+  image: "/blog/image.png"
+};
 
 const recentPosts = [
   {
-    title: "10 Dicas para Melhorar sua Produtividade",
-    excerpt: "Aprenda como otimizar seu tempo e aumentar sua eficiência no trabalho...",
-    author: {
-      name: "João Santos",
-      avatar: "/placeholder.svg?height=40&width=40"
-    },
+    title: "Um Guia Gastronômico para Paris: Onde Comer e Beber",
+    excerpt: "Explore os melhores restaurantes, cafés e bistrôs de Paris, onde você pode saborear desde croissants autênticos até alta gastronomia francesa.",
     date: "5 de Junho, 2023",
-    category: "Produtividade"
+    category: "Estilo de Vida",
+    image: "/blog/image2.png"
   },
   {
-    title: "A Importância da Sustentabilidade nos Negócios",
-    excerpt: "Como empresas estão adotando práticas sustentáveis e seu impacto...",
-    author: {
-      name: "Ana Oliveira",
-      avatar: "/placeholder.svg?height=40&width=40"
-    },
+    title: "Passeios Românticos em Paris para Casais",
+    excerpt: "Conheça os lugares mais românticos de Paris, perfeitos para casais. Inclui dicas de piqueniques no Sena, passeios de barco e vistas inesquecíveis.",
     date: "1 de Junho, 2023",
-    category: "Negócios"
+    category: "Curiosidade",
+    image: "/blog/image3.png"
   },
   {
-    title: "Introdução ao Machine Learning",
-    excerpt: "Um guia para iniciantes sobre os conceitos básicos de machine learning...",
-    author: {
-      name: "Carlos Ferreira",
-      avatar: "/placeholder.svg?height=40&width=40"
-    },
+    title: "Paris com um Orçamento Limitado: Dicas de Viagem Econômica",
+    excerpt: "Descubra como aproveitar Paris sem gastar muito, com dicas de atrações gratuitas, passeios a pé, e opções de alimentação econômica.",
     date: "28 de Maio, 2023",
-    category: "Tecnologia"
+    category: "Turismo",
+    image: "/blog/image4.png"
   }
-]
+];
 
+// Defina as categorias dentro do escopo do componente ou em um nível superior no arquivo
 const categories = [
-  "Tecnologia", "Produtividade", "Negócios", "Saúde", "Estilo de Vida"
-]
+  "Turismo", "Curiosidade", "Estilo de Vida"
+];
 
 export default function BlogHomePage() {
   return (
@@ -62,6 +51,7 @@ export default function BlogHomePage() {
           <h2 className="text-2xl font-semibold mb-4">Post em Destaque</h2>
           <Card>
             <CardHeader>
+              <Image src={featuredPost.image} alt={featuredPost.title} width={800} height={450} className="rounded-t-lg" />
               <CardTitle>{featuredPost.title}</CardTitle>
               <CardDescription>
                 <Badge>{featuredPost.category}</Badge>
@@ -70,12 +60,7 @@ export default function BlogHomePage() {
             <CardContent>
               <p className="mb-4">{featuredPost.excerpt}</p>
               <div className="flex items-center">
-                <Avatar className="mr-2">
-                  <AvatarImage src={featuredPost.author.avatar} alt={featuredPost.author.name} />
-                  <AvatarFallback>{featuredPost.author.name.charAt(0)}</AvatarFallback>
-                </Avatar>
                 <div>
-                  <p className="text-sm font-medium">{featuredPost.author.name}</p>
                   <p className="text-sm text-muted-foreground">{featuredPost.date}</p>
                 </div>
               </div>
@@ -94,6 +79,7 @@ export default function BlogHomePage() {
             {recentPosts.map((post, index) => (
               <Card key={index}>
                 <CardHeader>
+                  <Image src={post.image} alt={post.title} width={800} height={450} className="rounded-t-lg" />
                   <CardTitle>{post.title}</CardTitle>
                   <CardDescription>
                     <Badge>{post.category}</Badge>
@@ -102,12 +88,7 @@ export default function BlogHomePage() {
                 <CardContent>
                   <p className="mb-4">{post.excerpt}</p>
                   <div className="flex items-center">
-                    <Avatar className="mr-2">
-                      <AvatarImage src={post.author.avatar} alt={post.author.name} />
-                      <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
                     <div>
-                      <p className="text-sm font-medium">{post.author.name}</p>
                       <p className="text-sm text-muted-foreground">{post.date}</p>
                     </div>
                   </div>
@@ -147,7 +128,7 @@ export default function BlogHomePage() {
               <CardTitle>Sobre o Blog</CardTitle>
             </CardHeader>
             <CardContent>
-              <p>Bem-vindo ao nosso blog! Aqui compartilhamos insights sobre tecnologia, produtividade e muito mais.</p>
+              <p>Bem-vindo ao nosso blog! Aqui compartilhamos insights sobre Viagem, Turismo e muito mais.</p>
             </CardContent>
             <CardFooter>
               <Button variant="outline" asChild>
