@@ -20,7 +20,9 @@ export default function ComingSoonPage() {
 
   useEffect(() => {
     // Set the launch date to 30 days from now
-    const launchDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    const launchDate = new Date('2024-12-08T12:18:06');
+
+    // const launchDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
 
     const timer = setInterval(() => {
       const now = new Date()

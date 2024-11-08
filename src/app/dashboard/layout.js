@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }) {
             <CustomSidebar /> 
           </SidebarProvider>
         </aside>
-        <div className='z-10 bg-white'>
+        <div className='z-10 w-full bg-white'>
           {children}
         </div>
       </main>
