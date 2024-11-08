@@ -1,0 +1,48 @@
+[
+    {
+        "page": "home",
+        "id": 1,
+        "banner": 
+        {
+            "image": "/src/assets/eifel.jpeg",
+            "title": "Explore o mundo, conquisasdasdasdtando pessoas pedro gay",
+            "subtitle": "Ajudamos pessoas com seus destinos e viajens asdasd roldao muito gostoso",
+            "carousel": [
+                {
+                    "id": 1,
+                    "title": "Chose a place, activity and time asdasdasdasd",
+                    "text": "We help people find co travellers and also structure their travel plans "
+                },
+                {
+                    "id": 2,
+                    "title": "Chose a place, activity and time",
+                    "text": "We help people find co travellers and also structure their travel plans "
+                },
+                {
+                    "id": 3,
+                    "title": "Chose a place, activity and time",
+                    "text": "We help people find co travellers and also structureasdasdasdasd their travel plans "
+                }
+            ]
+        },
+        "travels": [
+            {
+                "img": "Airplane",
+                "title": "Chose a place, activity and time",
+                "text": "We help people find co travellers and also structure their travel plans "
+            },
+            {
+                "img": "ShieldCheck",
+                "title": "Chose a place, activity and time alo pedro",
+                "text": "We help people find co travellers and also structure their travel plans "
+            },
+            {
+                "img": "Faders",
+                "title": "Chose a place, activity and time",
+                "text": "We help people find co travellers and also structure their travel plans "
+            }
+        ],
+        "colorPrimary": "#f2c249",
+        "colorSecondary": ""
+    }
+]
