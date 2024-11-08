@@ -3,10 +3,10 @@
     "page": "home",
     "id": 1,
     "banner": {
-      "image": "/banner.png",
-      "title": "Explore o mundo",
-      "subtitle": "Ajudamos pessoas com seus destinos ",
-      "carousel": [
+    "image": "/banner.png",
+    "title": "Explore o mundo",
+    "subtitle": "Ajudamos pessoas com seus destinos ",
+    "carousel": [
             {
                 "id": 1,
                 "title": "Chose a place, activity and time asdasdasdasd",
@@ -157,5 +157,20 @@
         },
         "colorPrimary": "#f2c261",
         "colorSecondary": "#055647"
+    },
+    {
+        "page": "about",
+        "id": 2,
+        "firstPlace": 
+        {
+            "image": "/profile-fotos/Foto.png",
+            "title1": "WHO AM I",
+            "title2": "ABOUT ME",
+            "text": "asddddddddddddddjhkjsdhfshdjfskjshkdfjhijsdhfiasudhfaisudhfiausdhfiausdhfiasduhfiasudhfiausdfhaisudhfiausdahfisuadhfiusadhfiusdhfisudhfsiudhfsiufhsiudhfisudhfisudhfsiudhfsiudhfsiudhfsiudhfsiudfhsiudhfiushdfasjkdfbaakjsbdfkabdfkjbasjdfbkajdbfkjabsdfkjbajkdbfkjasbdjfbasjkdbfjkasbdfkjasdbfkjabdsfkjabsdfkjbasdkjfbakjdbfkajsdbfkajsdbfkjasbdfkjadbfkasdbfjkabsdfbweriwuerhgiuweyruiweytuirhkjvbnkjbnklnbodboindfnbldfnblkddnfboidnflkbnkiodfnblkfnb"
+        },
+        "secondPlace":
+        {
+            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida purus bibendum eget ut eget magna. Tellus arcu sit ultricies tempor odio aliquam sit. Ultrices blandit vel interdum viverra integer risus, pulvinar. Sed malesuada odio malesuada velit. Donec id faucibus ultricies fringilla pulvinar vulputate mauris, lorem egestas."   
+        }
     }
 ]

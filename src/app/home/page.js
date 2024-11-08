@@ -136,7 +136,7 @@ export default function Home() {
     }, []);
 
     return(
-        <div className="h-auto flex flex-col overflow-hidden relative">
+        <div className="h-auto flex flex-col overflow-hidden relative bg-backImagePage bg-cover bg-center">
             <Header />
             <Image src={back} alt="back" width={1000} height={950} quality={100} className="w-full h-[950px] absolute z-10" />
             <div className={`h-[950px] pt-[200px] px-[130px] flex flex-col gap-[110px] text-white z-20 relative bg-black bg-opacity-50`}>
