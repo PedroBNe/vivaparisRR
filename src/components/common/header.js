@@ -10,7 +10,7 @@ const header = {
 
 const nav = [
     { link: '/home', text: 'Inicio' },
-    { link: '/home', text: 'Sobre' },
+    { link: '/about', text: 'Sobre' },
     { link: '/home', text: 'Visitas' },
     { link: '/home', text: 'Aulas' },
     { link: '/home', text: 'Na Midia' },
