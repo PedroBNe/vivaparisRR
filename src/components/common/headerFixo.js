@@ -16,25 +16,18 @@ const nav = [
     { link: '/home', text: 'Visitas' },
     { link: '/home', text: 'Aulas' },
     { link: '/home', text: 'Na Midia' },
-    { link: '/blog', text: 'Blog' },
+    { link: '/home', text: 'Blog' },
 ];
 
-export default function Header() {
-    const pathname = usePathname();
-
-    // Rotas onde o Header não deve aparecer
-    const hideHeaderRoutes = ["/login", "/register", "/blog"]; 
-
-    // Verifica se a rota atual está na lista de rotas para ocultar o Header
-    if (hideHeaderRoutes.includes(pathname)) return null;
+export default function HeaderFixo() {
 
     return (
-        <header className="w-full p-10 px-[130px] bg-transparent flex justify-between text-white absolute z-30">
+        <header className="w-full p-10 px-[130px] bg-transparent flex justify-between text-white z-30">
             <Link href={header.link}>
                 <Image src={header.image} alt="logo" width={150} height={80} />
             </Link>
             <nav>
-                <ul className="flex gap-12 font-semibold">
+                <ul className="flex gap-12 font-semibold text-black">
                     {nav.map((item, index) => (
                         <li key={index}>
                             <Link href={item.link} className="hover:opacity-70 transition ease-in">{item.text}</Link>

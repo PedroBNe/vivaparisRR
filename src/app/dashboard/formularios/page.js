@@ -2,108 +2,185 @@
 
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
 
-// Dados mockados para formulários cadastrados
+// Dados de exemplo para formulários
 const forms = [
-  { id: 1, name: 'Contato', createdAt: '2024-01-01', responses: 15, status: 'Ativo' },
-  { id: 2, name: 'Feedback', createdAt: '2024-02-10', responses: 20, status: 'Inativo' },
-  { id: 3, name: 'Inscrição para Eventos', createdAt: '2024-03-05', responses: 35, status: 'Ativo' },
-  { id: 4, name: 'Pesquisa de Satisfação', createdAt: '2024-04-12', responses: 50, status: 'Ativo' },
-  { id: 5, name: 'Solicitação de Orçamento', createdAt: '2024-05-20', responses: 12, status: 'Inativo' },
+  { id: 1, name: 'Pesquisa de Satisfação', responses: 150, lastUpdated: '2023-05-15' },
+  { id: 2, name: 'Inscrição para Evento', responses: 75, lastUpdated: '2023-05-20' },
+  { id: 3, name: 'Feedback de Produto', responses: 200, lastUpdated: '2023-05-18' },
 ]
 
 export default function FormsPage() {
   const [selectedForm, setSelectedForm] = useState(null)
-  const [search, setSearch] = useState('')
+  const [isCreating, setIsCreating] = useState(false)
+  const [newFormFields, setNewFormFields] = useState([{ type: 'text', label: '' }])
 
-  // Função para filtrar formulários com base na busca
-  const filteredForms = forms.filter((form) =>
-    form.name.toLowerCase().includes(search.toLowerCase())
-  )
+  const addField = () => {
+    setNewFormFields([...newFormFields, { type: 'text', label: '' }])
+  }
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-5">Formulários Cadastrados</h1>
-      <div className="grid grid-cols-12 gap-4">
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>Pastas</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <nav className="space-y-2">
-              <Button variant="ghost" className="w-full justify-start">
-                Formulários Ativos
-              </Button>
-              <Button variant="ghost" className="w-full justify-start">
-                Formulários Inativos
-              </Button>
-            </nav>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full" onClick={() => alert('Novo formulário')}>
-              Novo Formulário
-            </Button>
-          </CardFooter>
-        </Card>
-        <Card className="col-span-9">
-          <Tabs defaultValue="all" className="w-full">
-            <TabsList className="grid w-full grid-cols-1">
-              <TabsTrigger value="all">Todos os Formulários</TabsTrigger>
-            </TabsList>
-            <TabsContent value="all">
-              <div className="p-4 flex items-center gap-2">
-                <input
-                  type="text"
-                  placeholder="Buscar formulário..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full border rounded p-2"
-                />
-                <Button onClick={() => setSearch('')}>Limpar</Button>
-              </div>
-              <ScrollArea className="h-[400px]">
-                {filteredForms.length > 0 ? (
-                  filteredForms.map((form) => (
-                    <div key={form.id} className="p-4 cursor-pointer hover:bg-accent" onClick={() => setSelectedForm(form)}>
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="font-semibold">{form.name}</div>
-                        <div className="text-sm text-muted-foreground">{form.createdAt}</div>
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        Respostas: {form.responses} | Status: {form.status}
-                      </div>
-                      <Separator className="my-2" />
-                    </div>
-                  ))
-                ) : (
-                  <div className="p-4 text-center text-muted-foreground">
-                    Nenhum formulário encontrado.
-                  </div>
-                )}
+      <h1 className="text-2xl font-bold mb-5">Gerenciamento de Formulários</h1>
+      <Tabs defaultValue="all-forms" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="all-forms">Todos os Formulários</TabsTrigger>
+          <TabsTrigger value="responses">Respostas</TabsTrigger>
+          <TabsTrigger value="create">Criar Formulário</TabsTrigger>
+        </TabsList>
+        <TabsContent value="all-forms">
+          <Card>
+            <CardHeader>
+              <CardTitle>Formulários Existentes</CardTitle>
+              <CardDescription>Gerencie seus formulários existentes</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Nome do Formulário</TableHead>
+                    <TableHead>Respostas</TableHead>
+                    <TableHead>Última Atualização</TableHead>
+                    <TableHead>Ações</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {forms.map((form) => (
+                    <TableRow key={form.id}>
+                      <TableCell>{form.name}</TableCell>
+                      <TableCell>{form.responses}</TableCell>
+                      <TableCell>{form.lastUpdated}</TableCell>
+                      <TableCell>
+                        <Button variant="outline" size="sm" onClick={() => setSelectedForm(form)}>
+                          Ver Detalhes
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="responses">
+          <Card>
+            <CardHeader>
+              <CardTitle>Respostas dos Formulários</CardTitle>
+              <CardDescription>Visualize as respostas recebidas</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Select>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Selecione um formulário" />
+                </SelectTrigger>
+                <SelectContent>
+                  {forms.map((form) => (
+                    <SelectItem key={form.id} value={form.id.toString()}>{form.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <ScrollArea className="h-[400px] mt-4">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>ID da Resposta</TableHead>
+                      <TableHead>Data</TableHead>
+                      <TableHead>Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {[...Array(10)].map((_, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>{new Date().toLocaleDateString()}</TableCell>
+                        <TableCell>
+                          <Button variant="outline" size="sm">Ver Detalhes</Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </ScrollArea>
-            </TabsContent>
-          </Tabs>
-        </Card>
-      </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="create">
+          <Card>
+            <CardHeader>
+              <CardTitle>Criar Novo Formulário</CardTitle>
+              <CardDescription>Crie um novo formulário personalizado</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form className="space-y-4">
+                <div>
+                  <Label htmlFor="form-name">Nome do Formulário</Label>
+                  <Input id="form-name" placeholder="Digite o nome do formulário" />
+                </div>
+                <div>
+                  <Label htmlFor="form-description">Descrição do Formulário</Label>
+                  <Textarea id="form-description" placeholder="Digite uma descrição para o formulário" />
+                </div>
+                {newFormFields.map((field, index) => (
+                  <div key={index} className="space-y-2">
+                    <Label htmlFor={`field-${index}`}>Campo {index + 1}</Label>
+                    <div className="flex space-x-2">
+                      <Select value={field.type} onValueChange={(value) => {
+                        const updatedFields = [...newFormFields]
+                        updatedFields[index].type = value
+                        setNewFormFields(updatedFields)
+                      }}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Tipo de Campo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="text">Texto</SelectItem>
+                          <SelectItem value="number">Número</SelectItem>
+                          <SelectItem value="email">E-mail</SelectItem>
+                          <SelectItem value="textarea">Área de Texto</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Input
+                        id={`field-${index}`}
+                        placeholder="Rótulo do campo"
+                        value={field.label}
+                        onChange={(e) => {
+                          const updatedFields = [...newFormFields]
+                          updatedFields[index].label = e.target.value
+                          setNewFormFields(updatedFields)
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <Button type="button" onClick={addField}>Adicionar Campo</Button>
+              </form>
+            </CardContent>
+            <CardFooter>
+              <Button>Criar Formulário</Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+      </Tabs>
       {selectedForm && (
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle>Detalhes do Formulário</CardTitle>
+            <CardTitle>{selectedForm.name}</CardTitle>
+            <CardDescription>Detalhes do formulário</CardDescription>
           </CardHeader>
           <CardContent>
-            <p><strong>Nome:</strong> {selectedForm.name}</p>
-            <p><strong>Data de Criação:</strong> {selectedForm.createdAt}</p>
-            <p><strong>Respostas:</strong> {selectedForm.responses}</p>
-            <p><strong>Status:</strong> {selectedForm.status}</p>
+            <p>Total de Respostas: {selectedForm.responses}</p>
+            <p>Última Atualização: {selectedForm.lastUpdated}</p>
           </CardContent>
-          <CardFooter className="justify-end space-x-2">
+          <CardFooter>
             <Button variant="outline" onClick={() => setSelectedForm(null)}>Fechar</Button>
-            <Button variant="outline">Editar</Button>
-            <Button variant="danger">Excluir</Button>
           </CardFooter>
         </Card>
       )}
