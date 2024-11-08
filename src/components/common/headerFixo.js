@@ -23,7 +23,7 @@ export default function HeaderFixo() {
     const pathname = usePathname();
 
     // Rotas onde o Header não deve aparecer
-    const hideHeaderRoutes = ["/home", ""]; 
+    const hideHeaderRoutes = ["/home", "/"]; 
 
     if (hideHeaderRoutes.includes(pathname) || pathname.startsWith('/dashboard')) return null;
 
