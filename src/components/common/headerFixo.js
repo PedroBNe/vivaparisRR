@@ -20,14 +20,20 @@ const nav = [
 ];
 
 export default function HeaderFixo() {
+    const pathname = usePathname();
+
+    // Rotas onde o Header não deve aparecer
+    const hideHeaderRoutes = ["/home", ""]; 
+
+    if (hideHeaderRoutes.includes(pathname) || pathname.startsWith('/dashboard')) return null;
 
     return (
-        <header className="w-full p-10 px-[130px] bg-transparent flex justify-between text-white z-30">
+        <header className="w-full h-[12vh] px-[130px] bg-[#1E1E1E] flex justify-between items-center text-white">
             <Link href={header.link}>
                 <Image src={header.image} alt="logo" width={150} height={80} />
             </Link>
             <nav>
-                <ul className="flex gap-12 font-semibold text-black">
+                <ul className="flex gap-12 font-semibold">
                     {nav.map((item, index) => (
                         <li key={index}>
                             <Link href={item.link} className="hover:opacity-70 transition ease-in">{item.text}</Link>

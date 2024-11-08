@@ -57,8 +57,6 @@ const categories = [
 export default function BlogHomePage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <HeaderFixo />
-
       <main className="grid gap-8 md:grid-cols-3">
         <section className="md:col-span-2">
           <h2 className="text-2xl font-semibold mb-4">Post em Destaque</h2>

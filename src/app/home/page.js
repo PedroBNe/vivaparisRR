@@ -14,6 +14,7 @@ import French from "@/assets/Frech";
 import Viagem from '@/assets/viagem.jpeg'
 import Back from '@/assets/eifel.jpeg'; // Background Image 
 import jsonData from '/data.json';
+import Header from "@/components/common/header";
 
 const Card = ({ title, text, id }) => (
     <div className="flex flex-col gap-5 p-5">
@@ -223,6 +224,7 @@ export default function Home() {
     return(
         <div className="flex flex-col overflow-hidden relative">
             <Image src={Back} alt="back" width={0} height={0} className="w-full h-[950px] absolute z-10" />
+            <Header />
             <div className={`h-[950px] pt-[200px] px-[130px] flex flex-col gap-[110px] text-white z-20 relative bg-black bg-opacity-50`}>
                 <div className="flex flex-col gap-[90px]">
                     <div className="flex flex-col gap-12">
