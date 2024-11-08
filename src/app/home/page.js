@@ -82,10 +82,10 @@ const DestinationCard = ({ destination }) => {
             </div>
             <div className="absolute top-[-55px] right-5 flex gap-5">
                 <Button disabled={currentIndex === 0} onClick={handlePrev} size={'largeIcon'} className={`flex items-center px-3 rounded-3xl bg-[#1E1E1E] hover:opacity-80 transition ease-in`}>
-                    <Arrow rotate={180} />
+                    <Arrow rotate={180} stroke="#ffffff" />
                 </Button>
                 <Button disabled={currentIndex === 5} onClick={handleNext} size={'largeIcon'} className={`flex items-center px-3 rounded-3xl bg-[#1E1E1E] hover:opacity-80 transition ease-in`}>
-                    <Arrow />
+                    <Arrow stroke="#ffffff" />
                 </Button>
             </div>
         </div>
@@ -136,7 +136,7 @@ export default function Home() {
     }, []);
 
     return(
-        <div className="flex flex-col overflow-hidden relative">
+        <div className="h-auto flex flex-col overflow-hidden relative">
             <Header />
             <Image src={back} alt="back" width={1000} height={950} quality={100} className="w-full h-[950px] absolute z-10" />
             <div className={`h-[950px] pt-[200px] px-[130px] flex flex-col gap-[110px] text-white z-20 relative bg-black bg-opacity-50`}>
@@ -173,7 +173,7 @@ export default function Home() {
                     ))}
                 </div>
             </div>
-            <div className="h-[90vh] px-[130px] py-[120px] flex flex-col gap-4 font" style={{ color: colorSecondary }}>
+            <div className="min-h-[90vh] px-[130px] py-[120px] flex flex-col gap-4 font" style={{ color: colorSecondary }}>
                 <p className="text-lg font-semibold">Para onde voce gostaria de ir?</p>
                 <h2 className="text-5xl font-bold">Destinos Populares</h2>
                 <DestinationCard color={colorSecondary} destination={destiny} />
@@ -210,7 +210,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="h-[115vh] flex justify-center items-start font" style={{ color: colorSecondary }}>
+            <div className="min-h-[115vh] flex justify-center items-start font" style={{ color: colorSecondary }}>
                 <div className="flex flex-col justify-center items-center gap-4">
                     <p className="text-lg font-semibold">Galeria de viajens</p>
                     <h2 className="text-5xl font-bold">Viajens feitas</h2>
@@ -224,7 +224,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="h-[50vh] flex flex-col gap-[80px] justify-center items-center font" style={{ backgroundColor: colorSecondary }}>
+            <div className="min-h-[50vh] flex flex-col gap-[80px] justify-center items-center font" style={{ backgroundColor: colorSecondary }}>
                 <div className="flex flex-col gap-4 justify-center items-center text-white text-5xl font-bold">
                     <h1>Pronto para viajar?</h1>
                     <p>Entre em contato com a gente</p>

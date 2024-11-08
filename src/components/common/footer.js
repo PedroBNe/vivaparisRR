@@ -16,7 +16,7 @@ const nav = [
         text: 'Inicio'
     },
     {
-        link: '/home',
+        link: '/about',
         text: 'Sobre'
     },
     {
