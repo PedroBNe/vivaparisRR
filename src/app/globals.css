@@ -2,11 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.back {
-  background-image: url('/src/assets/eifel.jpeg');
-  background-color: black;
-  width: 300px;
-  height: 200px;
+.font {
+  font-family: "Playfair Display", serif;
 }
 
 :root {
