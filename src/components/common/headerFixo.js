@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Logo from '@/assets/Ativo 9.png';
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const header = {
     link: "/home",
-    image: Logo
 };
 
 const nav = [
@@ -22,6 +21,8 @@ const nav = [
 export default function HeaderFixo() {
     const pathname = usePathname();
 
+    const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);
+
     // Rotas onde o Header não deve aparecer
     const hideHeaderRoutes = ["/home", "/"]; 
 
@@ -30,7 +31,7 @@ export default function HeaderFixo() {
     return (
         <header className="w-full h-[12vh] px-[130px] bg-[#1E1E1E] flex justify-between items-center text-white">
             <Link href={header.link}>
-                <Image src={header.image} alt="logo" width={150} height={80} />
+                <Image src={logo} alt="logo" width={150} height={80} />
             </Link>
             <nav>
                 <ul className="flex gap-12 font-semibold">

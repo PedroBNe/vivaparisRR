@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Logo from '@/assets/Ativo 9.png';
+import { useState } from "react";
 
 const header = {
     link: "/home",
-    image: Logo
 };
 
 const nav = [
@@ -19,10 +18,14 @@ const nav = [
 ];
 
 export default function Header() {
+
+    const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);
+
+
     return (
         <header className="w-full p-10 px-[130px] bg-transparent flex justify-between text-white absolute z-30">
             <Link href={header.link}>
-                <Image src={header.image} alt="logo" width={150} height={80} />
+                <Image src={logo} alt="logo" width={150} height={80} />
             </Link>
             <nav>
                 <ul className="flex gap-12 font-semibold">
