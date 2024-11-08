@@ -3,45 +3,104 @@
     "page": "home",
     "id": 1,
     "banner": {
-      "image": "/src/assets/eifel.jpeg",
+      "image": "/back-image-home/eifel.jpeg",
       "title": "Explore o mundo",
       "subtitle": "Ajudamos pessoas com seus destinos ",
       "carousel": [
-        {
-          "id": 1,
-          "title": "Chose a place, activity and time asdasdasdasd",
-          "text": "We help people find co travellers and also structure their travel plans "
-        },
-        {
-          "id": 2,
-          "title": "Chose a place, activity and time",
-          "text": "We help people find co travellers and also structure their travel plans "
-        },
-        {
-          "id": 3,
-          "title": "Chose a place, activity and time",
-          "text": "We help people find co travellers and also structureasdasdasdasd their travel plans "
-        }
-      ]
+            {
+                "id": 1,
+                "title": "Chose a place, activity and time asdasdasdasd",
+                "text": "We help people find co travellers and also structure their travel plans "
+            },
+            {
+                "id": 2,
+                "title": "Chose a place, activity and time",
+                "text": "We help people find co travellers and also structure their travel plans "
+            },
+            {
+                "id": 3,
+                "title": "Chose a place, activity and time",
+                "text": "We help people find co travellers and also structureasdasdasdasd their travel plans "
+            }
+        ]
     },
-    "travels": [
-      {
-        "img": "Airplane",
-        "title": "Chose a place, activity and time",
-        "text": "We help people find co travellers and also structure their travel plans "
-      },
-      {
-        "img": "ShieldCheck",
-        "title": "Chose a place, activity and time alo pedro",
-        "text": "We help people find co travellers and also structure their travel plans "
-      },
-      {
-        "img": "Faders",
-        "title": "Chose a place, activity and time",
-        "text": "We help people find co travellers and also structure their travel plans "
-      }
-    ],
-    "colorPrimary": "#f2c249",
-    "colorSecondary": ""
-  }
+        "travels": [
+            {
+                "img": "Airplane",
+                "title": "Chose a place, activity and time",
+                "text": "We help people find co travellers and also structure their travel plans "
+            },
+            {
+                "img": "ShieldCheck",
+                "title": "Chose a place, activity and time alo pedro",
+                "text": "We help people find co travellers and also structure their travel plans "
+            },
+            {
+                "img": "Faders",
+                "title": "Chose a place, activity and time",
+                "text": "We help people find co travellers and also structure their travel plans "
+            }
+        ],
+        "destiny": [
+            {
+                "destino": "Museu do Louvre",
+                "local": "Paris, França",
+                "estilo": "Clássico",
+                "img": "/destiny/meuteste.jpeg"
+            },
+            {
+                "destino": "Museu do Louvre",
+                "local": "Paris, França",
+                "estilo": "Egito",
+                "img": "/destiny/meuteste.jpeg"
+            },
+            {
+                "destino": "Museu do Louvre",
+                "local": "Paris, França",
+                "estilo": "Kids (em breve)",
+                "img": "/destiny/meuteste.jpeg"
+            },
+            {
+                "destino": "Museu d’Orsay",
+                "local": "Paris, França",
+                "img": "/destiny/meuteste.jpeg"
+            },
+            {
+                "destino": "Museu Rodin",
+                "local": "Paris, França",
+                "img": "/destiny/meuteste.jpeg"
+            },
+            {
+                "destino": "Montmartre",
+                "local": "Paris, França",
+                "rua": "Île de la Cité + Quartier Latin",
+                "img": "/destiny/meuteste.jpeg"
+            },
+            {
+                "destino": "Montmartre",
+                "local": "Paris, França",
+                "rua": "Île de la Cité + Le Marais",
+                "img": "/destiny/meuteste.jpeg"
+            },
+            {
+                "destino": "Montmartre",
+                "local": "Paris, França",
+                "rua": "Eixo histórico",
+                "img": "/destiny/meuteste.jpeg"
+            },
+            {
+                "destino": "Montmartre",
+                "local": "Paris, França",
+                "rua": "Revolução Francesa (em breve !)",
+                "img": "/destiny/meuteste.jpeg"
+            },
+            {
+                "destino": "Castelo de Versalhes",
+                "local": "Versalhes, França",
+                "img": "/destiny/meuteste.jpeg"
+            }
+        ],
+        "colorPrimary": "#f2c261",
+        "colorSecondary": "#055647"
+    }
 ]

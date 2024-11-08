@@ -40,15 +40,15 @@ const nav = [
 const redes = [
     {
         link: "",
-        botao: <Face width={35} height={35} className="hover:opacity-70 transition ease-in" />,
+        botao: <Face width={36} height={36} className="w-fit hover:opacity-70 transition ease-in" />,
     },
     {
         link: "",
-        botao: <Insta width={40} height={40} className="hover:opacity-70 transition ease-in" />,
+        botao: <Insta width={43} height={43} className="w-fit hover:opacity-70 transition ease-in" />,
     },
     {
         link: "",
-        botao: <Whats width={40} height={40} className="hover:opacity-70 transition ease-in" />,
+        botao: <Whats width={42} height={43} className="w-fit hover:opacity-70 transition ease-in" />,
     },
 ]
 
