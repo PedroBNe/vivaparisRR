@@ -160,11 +160,11 @@ export default function Home() {
             </div>
             <div className="w-full min-h-[50vh] flex items-end bg-[#1E1E1E] text-[#D9D9D9] relative pb-10">
                 <div className="w-[105%] h-[8vh] flex items-center justify-around absolute left-[-10px] top-0 font-semibold text-3xl rotate-2 z-20" style={{ backgroundColor: colorSecondary }}>
-                    <p>explore</p>
-                    <p>adventure</p>
-                    <p>luxury</p>
-                    <p>enjoy</p>
-                    <p>explore</p>
+                    <p>Explore</p>
+                    <p>Descubra</p>
+                    <p>Aprecie</p>
+                    <p>Experimente</p>
+                    <p>Vivencie</p>
                 </div>
                 <div className="w-full h-[8vh] absolute top-0 z-10" style={{ backgroundColor: colorPrimary }}></div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10 p-8 px-[130px]">
@@ -210,7 +210,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="min-h-[115vh] flex justify-center items-start font" style={{ color: colorSecondary }}>
+            <div className="flex justify-center items-start font mb-14" style={{ color: colorSecondary }}>
                 <div className="flex flex-col justify-center items-center gap-4">
                     <p className="text-lg font-semibold">Galeria de viajens</p>
                     <h2 className="text-5xl font-bold">Viajens feitas</h2>
