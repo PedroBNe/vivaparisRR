@@ -11,7 +11,9 @@ module.exports = {
   	extend: {
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-  			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+  			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+			'backImagePage': "url('/back-image-page/fundo-site.png')",
+			'fitaImage': "url('/fita-image.png')"
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
