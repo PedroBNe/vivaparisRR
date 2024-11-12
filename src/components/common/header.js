@@ -20,7 +20,7 @@ const nav = [
 ];
 
 export default function Header() {
-    const window = useWindowWidth();
+    const windowSize = useWindowWidth();
     const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);
     const [hidden, setHidden] = useState(true);
 
@@ -28,18 +28,12 @@ export default function Header() {
 
     const handleNoScroll = () => (document.body.style.position = "fixed"); // Can not scroll down
 
-    useEffect(() => {
-        function ApplyFixed() {
-            body
-        }
-    }, [])
-
     return (
         <header className="w-full p-10 lg:px-[130px] bg-transparent flex justify-between text-white absolute z-30">
             <Link href={header.link}>
                 <Image src={logo} alt="logo" width={150} height={80} />
             </Link>
-            {window > 1024 && (
+            {windowSize > 1024 && (
                 <nav>
                     <ul className="flex gap-12 font-semibold">
                         {nav.map((item, index) => (
@@ -53,7 +47,7 @@ export default function Header() {
                     </ul>
                 </nav>
             )}
-            {window <= 1024 && (
+            {windowSize <= 1024 && (
                 <div>
                     <button onClick={() => {setHidden(!hidden), handleNoScroll()}}>
                         <Menu  />

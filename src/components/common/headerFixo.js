@@ -20,6 +20,7 @@ const nav = [
 ];
 
 export default function HeaderFixo() {
+    const windowSize = useWindowWidth();
     const pathname = usePathname();
 
     const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);
@@ -34,7 +35,7 @@ export default function HeaderFixo() {
             <Link href={header.link}>
                 <Image src={logo} alt="logo" width={150} height={80} />
             </Link>
-            {window > 1024 && (
+            {windowSize > 1024 && (
                 <nav>
                     <ul className="flex gap-12 font-semibold">
                         {nav.map((item, index) => (
@@ -48,7 +49,7 @@ export default function HeaderFixo() {
                     </ul>
                 </nav>
             )}
-            {window <= 1024 && (
+            {windowSize <= 1024 && (
                 <div>
                     <button onClick={() => {setHidden(!hidden), handleNoScroll()}}>
                         <Menu  />
