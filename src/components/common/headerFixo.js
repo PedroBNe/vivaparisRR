@@ -40,6 +40,7 @@ function useWindowSize() {
 export default function HeaderFixo() {
     const windowSize = useWindowSize();
     const pathname = usePathname();
+    const [hidden, setHidden] = useState(true);
 
     const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);
 
