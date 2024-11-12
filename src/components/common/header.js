@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import useWindowWidth from "../getwid";
 import Menu from "@/assets/Menu";
 
 const header = {
@@ -19,8 +18,26 @@ const nav = [
     { link: '/blog', text: 'Blog' },
 ];
 
+function useWindowSize() {
+    const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+  
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        function handleResize() {
+          setWidth(window.innerWidth);
+        }
+  
+        window.addEventListener('resize', handleResize);
+        
+        return () => window.removeEventListener('resize', handleResize);
+      }
+    }, []);
+  
+    return width;
+  }
+
 export default function Header() {
-    const windowSize = useWindowWidth();
+    const windowSize = useWindowSize();
     const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);
     const [hidden, setHidden] = useState(true);
 

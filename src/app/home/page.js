@@ -14,7 +14,7 @@ import jsonData from '/data.json';
 import Header from "@/components/common/header";
 import Idea from "@/assets/idea";
 import Map from "@/assets/map";
-import useWindowWidth from "@/components/getwid";
+import useWindowSize from "@/components/getwid";
 
 const Card = ({ title, text, id }) => (
     <div className="flex flex-col items-center lg:items-start gap-5 p-5">
@@ -59,7 +59,7 @@ const DestinationCard = ({ destination }) => {
         setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
     };
 
-    const windowWidth = useWindowWidth();
+    const windowWidth = useWindowSize();
     function adjust() {
         if (windowWidth <= 425) return setBool(9);
 
@@ -106,7 +106,6 @@ const DestinationCard = ({ destination }) => {
         </div>
     );
 };
-
 
 const GaleryCard = ({ galery }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">

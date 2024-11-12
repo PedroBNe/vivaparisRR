@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Menu from "@/assets/Menu";
 
 const header = {
@@ -19,8 +19,26 @@ const nav = [
     { link: '/home', text: 'Blog' },
 ];
 
+function useWindowSize() {
+    const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+  
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        function handleResize() {
+          setWidth(window.innerWidth);
+        }
+  
+        window.addEventListener('resize', handleResize);
+        
+        return () => window.removeEventListener('resize', handleResize);
+      }
+    }, []);
+  
+    return width;
+  }
+
 export default function HeaderFixo() {
-    const windowSize = useWindowWidth();
+    const windowSize = useWindowSize();
     const pathname = usePathname();
 
     const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);

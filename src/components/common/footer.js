@@ -6,8 +6,7 @@ import Image from "next/image";
 import Face from "@/assets/Face";
 import Insta from "@/assets/Insta";
 import Whats from "@/assets/Whats";
-import { useEffect } from "react";
-import useWindowSize from "../getwid";
+import { useEffect, useState } from "react";
 import Arrow from "@/assets/Arrow";
 
 const header = {
@@ -71,6 +70,24 @@ const ButtonsFooter = () => {
     )
 }
 
+function useWindowSize() {
+    const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+  
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        function handleResize() {
+          setWidth(window.innerWidth);
+        }
+  
+        window.addEventListener('resize', handleResize);
+        
+        return () => window.removeEventListener('resize', handleResize);
+      }
+    }, []);
+  
+    return width;
+  }
+
 export default function Footer() {
     const width  = useWindowSize();
 
@@ -81,7 +98,7 @@ export default function Footer() {
     return(
         <footer className="flex flex-col gap-[50px] bg-[#1E1E1E] text-white px-[20px] lg:px-[130px] py-[40px] overflow-x-hidden">
             {width >= 1024 && (
-                <nav className="flex items-center justify-between">
+                <div className="flex items-center justify-between">
                     <Link href={header.link}>
                         <Image src={header.image} alt="logo" width={150} height={80} />
                     </Link>
@@ -97,7 +114,7 @@ export default function Footer() {
                             </li>
                         </ul>
                     </div>
-                </nav>
+                </div>
             )}
             {width < 1024 && (
                 <div className="w-full flex justify-center">
