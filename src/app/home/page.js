@@ -14,9 +14,10 @@ import jsonData from '/data.json';
 import Header from "@/components/common/header";
 import Idea from "@/assets/idea";
 import Map from "@/assets/map";
+import useWindowWidth from "@/components/getwid";
 
 const Card = ({ title, text, id }) => (
-    <div className="flex flex-col gap-5 p-5">
+    <div className="flex flex-col items-center lg:items-start gap-5 p-5">
         <div>0{id}</div>
         <h3 className="font-bold">{title}</h3>
         <p>{text}</p>
@@ -48,6 +49,7 @@ const TravelsCard = ({ title, text, img, color }) => (
 
 const DestinationCard = ({ destination }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [bool, setBool] = useState(0);
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, destination.length - 1));
@@ -57,8 +59,21 @@ const DestinationCard = ({ destination }) => {
         setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
     };
 
-    return(
-        <div className="w-full relative">
+    const windowWidth = useWindowWidth();
+    function adjust() {
+        if (windowWidth <= 425) return setBool(9);
+
+        if (windowWidth <= 1024 && windowWidth > 425) return setBool(8);
+
+        return setBool(5);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', adjust())
+    }, []);
+
+    return (
+        <div className="w-full flex flex-col gap-5 relative">
             <div
                 className="flex transition-transform duration-500"
                 style={{ transform: `translateX(-${currentIndex * 340}px)` }}
@@ -80,17 +95,18 @@ const DestinationCard = ({ destination }) => {
                     </div>
                 ))}
             </div>
-            <div className="absolute top-[-55px] right-5 flex gap-5">
+            <div className="w-full sm:w-fit sm:absolute top-[-55px] right-5 flex justify-center gap-5">
                 <Button disabled={currentIndex === 0} onClick={handlePrev} size={'largeIcon'} className={`flex items-center px-3 rounded-3xl bg-[#1E1E1E] hover:opacity-80 transition ease-in`}>
                     <Arrow rotate={180} stroke="#ffffff" />
                 </Button>
-                <Button disabled={currentIndex === 5} onClick={handleNext} size={'largeIcon'} className={`flex items-center px-3 rounded-3xl bg-[#1E1E1E] hover:opacity-80 transition ease-in`}>
+                <Button disabled={currentIndex === bool} onClick={handleNext} size={'largeIcon'} className={`flex items-center px-3 rounded-3xl bg-[#1E1E1E] hover:opacity-80 transition ease-in`}>
                     <Arrow stroke="#ffffff" />
                 </Button>
             </div>
         </div>
-    )
-}
+    );
+};
+
 
 const GaleryCard = ({ galery }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
@@ -110,7 +126,7 @@ const GaleryCard = ({ galery }) => (
             </div>
         ))}
     </div>
-)
+);
 
 export default function Home() {
     const [banner, setBanner] = useState({});
@@ -136,29 +152,29 @@ export default function Home() {
     }, []);
 
     return(
-        <div className="h-auto flex flex-col overflow-hidden relative bg-backImagePage bg-cover bg-center">
+        <div className="h-auto flex flex-col overflow-x-hidden relative bg-backImagePage bg-cover bg-center">
             <Header />
             <Image src={back} alt="back" width={1000} height={950} quality={100} className="w-full h-[950px] absolute z-10" />
-            <div className={`h-[950px] pt-[200px] px-[130px] flex flex-col gap-[110px] text-white z-20 relative bg-black bg-opacity-50`}>
+            <div className={`w-full pt-[200px] px-[20px] lg:px-[130px] flex flex-col gap-[110px] text-white z-20 relative bg-black bg-opacity-50`}>
                 <div className="flex flex-col gap-[90px]">
                     <div className="flex flex-col gap-12">
-                        <h1 className="w-[45%] items-center text-6xl font-bold">{banner.title}</h1>
-                        <h2>{banner.subtitle}</h2>
+                        <h1 className="w-full xl:w-[65%] items-center text-3xl lg:text-6xl font-bold">{banner.title}</h1>
+                        <h2 className="text-sm md:text-md">{banner.subtitle}</h2>
                     </div>
                     <Link href={''} className="w-fit">
                         <MyButton color={colorPrimary}>Saiba mais</MyButton>
                     </Link>
                 </div>
-                <div>
+                <div className="w-full">
                     <hr />
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
-                        {carousel.map((item) => (
-                            <Card key={item.id} title={item.title} text={item.text} id={item.id} />
+                    <div className="w-full flex flex-col lg:flex-row justify-between items-center text-center lg:text-start gap-8 p-8">
+                        {carousel.map((item, index) => (
+                            <Card key={index} title={item.title} text={item.text} id={item.id} />
                         ))}
                     </div>
                 </div>
             </div>
-            <div className="w-full min-h-[50vh] flex items-end bg-[#1E1E1E] text-[#D9D9D9] relative pb-10">
+            <div className="w-full py-[35px] flex items-end bg-[#1E1E1E] text-[#D9D9D9] relative">
                 <div className="w-[105%] h-[8vh] flex items-center justify-around absolute left-[-10px] top-0 font-semibold text-3xl rotate-2 z-20" style={{ backgroundColor: colorSecondary }}>
                     <p>Explore</p>
                     <p>Descubra</p>
@@ -167,30 +183,30 @@ export default function Home() {
                     <p>Vivencie</p>
                 </div>
                 <div className="w-full h-[8vh] absolute top-0 z-10" style={{ backgroundColor: colorPrimary }}></div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 p-8 px-[130px]">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 py-[35px] pt-[80px] px-[50px] lg:px-[130px]">
                     {travels.map((item) => (
                         <TravelsCard key={item.id} title={item.title} text={item.text} img={item.img} color={colorPrimary} />
                     ))}
                 </div>
             </div>
-            <div className="min-h-[90vh] px-[130px] py-[120px] flex flex-col gap-4 font" style={{ color: colorSecondary }}>
+            <div className="px-[20px] lg:px-[130px] py-[120px] flex flex-col gap-4 font" style={{ color: colorSecondary }}>
                 <p className="text-lg font-semibold">Para onde voce gostaria de ir?</p>
                 <h2 className="text-5xl font-bold">Destinos Populares</h2>
                 <DestinationCard color={colorSecondary} destination={destiny} />
             </div>
-            <div className="min-h-[90vh] px-[130px] flex flex-col gap-10 font pb-[40px]" style={{ color: colorSecondary }}>
+            <div className="px-[20px] lg:px-[130px] flex flex-col gap-10 font pb-[40px]" style={{ color: colorSecondary }}>
                 <div className="flex flex-col gap-4">
                     <p className="text-lg font-semibold">Para onde voce gostaria de ir?</p>
-                    <div className="flex justify-between">
+                    <div className="flex flex-col gap-[30px] lg:flex-row items-center lg:items-start lg:justify-between">
                         <h2 className="text-5xl font-bold">Deixe seus planos conosco e vá às alturas</h2>
                         <MyButton>
                             Saiba mais
                         </MyButton>
                     </div>
                 </div>
-                <div className="w-full flex justify-center items-center gap-[70px] p-5">
+                <div className="w-full flex flex-col lg:flex-row justify-center items-center gap-[70px] p-5">
                     <Image src={plan.image} alt="viagem" width={550} height={480} quality={100} className="w-[550px] h-[480px] rounded-xl shadow-2xl"/>
-                    <div className="w-[50%] flex flex-col gap-[80px] p-10">
+                    <div className="w-full lg:w-[50%] flex flex-col gap-[80px] p-0 lg:p-10">
                         <div className="flex flex-col gap-7">
                             <Map width={80} height={80} fill={colorSecondary} />
                             <h2 className="text-4xl font-semibold">{plan.title1}</h2>
@@ -224,7 +240,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="min-h-[50vh] flex flex-col gap-[80px] justify-center items-center font" style={{ backgroundColor: colorSecondary }}>
+            <div className="flex flex-col gap-[80px] justify-center items-center text-center font py-8" style={{ backgroundColor: colorSecondary }}>
                 <div className="flex flex-col gap-4 justify-center items-center text-white text-5xl font-bold">
                     <h1>Pronto para viajar?</h1>
                     <p>Entre em contato com a gente</p>

@@ -1,9 +1,14 @@
+'use client'
+
 import Link from "next/link"
 import Logo from '@/assets/Ativo 9.png';
 import Image from "next/image";
 import Face from "@/assets/Face";
 import Insta from "@/assets/Insta";
 import Whats from "@/assets/Whats";
+import { useEffect } from "react";
+import useWindowSize from "../getwid";
+import Arrow from "@/assets/Arrow";
 
 const header = {
     link: "/home",
@@ -67,27 +72,42 @@ const ButtonsFooter = () => {
 }
 
 export default function Footer() {
+    const width  = useWindowSize();
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return(
-        <footer className="flex flex-col gap-[50px] bg-[#1E1E1E] text-white px-[150px] py-[40px]">
-            <nav className="flex items-center justify-between">
-                <Link href={header.link}>
-                    <Image src={header.image} alt="logo" width={150} height={80} />
-                </Link>
-                <div>
-                    <ul className="flex gap-12 font-semibold">
-                        {nav.map((item, index) => (
-                            <li key={index}>
-                                <Link href={item.link} className="hover:opacity-70 transition ease-in">{item.text}</Link>
+        <footer className="flex flex-col gap-[50px] bg-[#1E1E1E] text-white px-[20px] lg:px-[130px] py-[40px] overflow-x-hidden">
+            {width >= 1024 && (
+                <nav className="flex items-center justify-between">
+                    <Link href={header.link}>
+                        <Image src={header.image} alt="logo" width={150} height={80} />
+                    </Link>
+                    <div>
+                        <ul className="flex gap-8 font-semibold">
+                            {nav.map((item, index) => (
+                                <li key={index}>
+                                    <Link href={item.link} className="hover:opacity-70 transition ease-in">{item.text}</Link>
+                                </li>
+                            ))}
+                            <li>
+                                <Link href={''} className="border-[1px] p-2 px-4 rounded-3xl hover:bg-white hover:text-black transition ease-in border-white">Contato</Link>
                             </li>
-                        ))}
-                        <li>
-                            <Link href={''} className="border-[1px] p-2 px-4 rounded-3xl hover:bg-white hover:text-black transition ease-in border-white">Contato</Link>
-                        </li>
-                    </ul>
+                        </ul>
+                    </div>
+                </nav>
+            )}
+            {width < 1024 && (
+                <div className="w-full flex justify-center">
+                    <button onClick={() => scrollToTop()}>
+                        <Arrow rotate={270} stroke="#ffffff" width={50} height={50} />
+                    </button>
                 </div>
-            </nav>
+            )}
             <hr className="opacity-85" />
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center text-sm gap-5">
                 <p>	&copy;VivaParis 2024 todos os direitos reservados</p>
                 <div>
                     <ButtonsFooter />
