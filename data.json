@@ -163,5 +163,19 @@
     },
     "colorPrimary": "#f2c261",
     "colorSecondary": "#055647"
+  },
+  {
+    "page": "about",
+    "id": 2,
+    "firstPlace": 
+    {
+      "title1": "Nossos Parceiros",
+      "title2": "Acompanhe a Companhia Ideal",
+      "text": "Acompanhe o roteiro ideal para o seu destino, com o planejamento de viagem, personalize e facilite a sua jornada.",
+      "image": "/banner.png"
+    },
+    "secondPlace": {
+      "text":"Acompanhe o roteiro ideal para o seu destino, com o planejamento de viagem, personalize e facilite a sua jornada."
+    }
   }
 ]
