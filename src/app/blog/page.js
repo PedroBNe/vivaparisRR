@@ -1,75 +1,96 @@
-import Link from 'next/link'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Image from 'next/image'
+"use client"
 
-// Dados de exemplo para os posts do blog
-const featuredPost = {
-  id: 1,
-  title: "Os Principais Pontos Turísticos de Paris",
-  excerpt: "Descubra os locais mais icônicos de Paris, desde a Torre Eiffel até o Louvre, e aprenda como aproveitar ao máximo cada visita.",
-  date: "10 de Junho, 2023",
-  category: "Turismo",
-  image: "/blog/image.png",
-  content: "Conteúdo completo do post aqui..."
-}
-
-const recentPosts = [
-  {
-    id: 2,
-    title: "Um Guia Gastronômico para Paris: Onde Comer e Beber",
-    excerpt: "Explore os melhores restaurantes, cafés e bistrôs de Paris, onde você pode saborear desde croissants autênticos até alta gastronomia francesa.",
-    date: "5 de Junho, 2023",
-    category: "Estilo de Vida",
-    image: "/blog/image2.png",
-    content: "Conteúdo completo do post aqui..."
-  },
-]
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Image from 'next/image';
 
 // Defina as categorias dentro do escopo do componente ou em um nível superior no arquivo
-const categories = [
-  "Turismo", "Curiosidade", "Estilo de Vida"
-];
+const categories = ["Turismo", "Curiosidade", "Estilo de Vida"];
 
 export default function BlogHomePage() {
+  const [blogs, setBlogs] = useState([]);
+  const [featuredPost, setFeaturedPost] = useState(null);
+  const [recentPosts, setRecentPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch('/api/blogs', { method: 'GET' });
+        if (!response.ok) throw new Error("Erro ao carregar os blogs");
+
+        const data = await response.json();
+        if (data.length > 0) {
+          setFeaturedPost(data[0]); // O primeiro post como destaque
+          setRecentPosts(data.slice(1)); // O restante como posts recentes
+        }
+      } catch (error) {
+        console.error("Erro ao buscar os blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  if (loading) {
+    return <p className="text-center py-8">Carregando...</p>;
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <main className="grid gap-8 md:grid-cols-3">
         <section className="md:col-span-2">
-          <h2 className="text-2xl font-semibold mb-4">Post em Destaque</h2>
-          <Card>
-            <CardHeader>
-              <Image src={featuredPost.image} alt={featuredPost.title} width={800} height={450} className="rounded-t-lg" />
-              <CardTitle>{featuredPost.title}</CardTitle>
-              <CardDescription>
-                <Badge>{featuredPost.category}</Badge>
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-4">{featuredPost.excerpt}</p>
-              <div className="flex items-center">
-                <div>
-                  <p className="text-sm text-muted-foreground">{featuredPost.date}</p>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button asChild>
-                <Link href={`/blog/${featuredPost.id}`}>
-                  Ler mais
-                </Link>
-              </Button>
-            </CardFooter>
-          </Card>
+          {featuredPost && (
+            <>
+              <h2 className="text-2xl font-semibold mb-4">Post em Destaque</h2>
+              <Card>
+                <CardHeader>
+                  <Image
+                    src={featuredPost.image}
+                    alt={featuredPost.title}
+                    width={800}
+                    height={450}
+                    className="rounded-t-lg"
+                  />
+                  <CardTitle>{featuredPost.title}</CardTitle>
+                  <CardDescription>
+                    <Badge>{featuredPost.category}</Badge>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="mb-4">{featuredPost.excerpt}</p>
+                  <div className="flex items-center">
+                    <div>
+                      <p className="text-sm text-muted-foreground">{featuredPost.date}</p>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button asChild>
+                    <Link href={`/blog/${featuredPost.id}`}>Ler mais</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            </>
+          )}
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">Posts Recentes</h2>
           <div className="space-y-4">
-            {recentPosts.map((post, index) => (
-              <Card key={index}>
+            {recentPosts.map((post) => (
+              <Card key={post.id}>
                 <CardHeader>
-                  <Image src={post.image} alt={post.title} width={800} height={450} className="rounded-t-lg" />
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    width={800}
+                    height={450}
+                    className="rounded-t-lg"
+                  />
                   <CardTitle>{post.title}</CardTitle>
                   <CardDescription>
                     <Badge>{post.category}</Badge>
@@ -85,9 +106,7 @@ export default function BlogHomePage() {
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline" asChild>
-                    <Link href={`/blog/${post.id}`}>
-                      Ler mais
-                    </Link>
+                    <Link href={`/blog/${post.id}`}>Ler mais</Link>
                   </Button>
                 </CardFooter>
               </Card>
@@ -104,9 +123,7 @@ export default function BlogHomePage() {
               <div className="flex flex-wrap gap-2">
                 {categories.map((category, index) => (
                   <Badge key={index} variant="secondary">
-                    <Link href={`/category/${category.toLowerCase()}`}>
-                      {category}
-                    </Link>
+                    <Link href={`/category/${category.toLowerCase()}`}>{category}</Link>
                   </Badge>
                 ))}
               </div>
@@ -129,5 +146,5 @@ export default function BlogHomePage() {
         </aside>
       </main>
     </div>
-  )
+  );
 }

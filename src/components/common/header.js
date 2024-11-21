@@ -58,7 +58,7 @@ export default function Header() {
                                 <Link href={item.link} className="hover:opacity-70 transition ease-in">{item.text}</Link>
                             </li>
                         ))}
-                        <li>a
+                        <li>
                             <Link href="" className="border-[1px] p-2 px-4 rounded-3xl hover:bg-white hover:text-black transition ease-in border-white">Contato</Link>
                         </li>
                     </ul>
