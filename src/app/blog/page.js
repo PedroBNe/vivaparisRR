@@ -7,36 +7,26 @@ import Image from 'next/image'
 
 // Dados de exemplo para os posts do blog
 const featuredPost = {
+  id: 1,
   title: "Os Principais Pontos Turísticos de Paris",
   excerpt: "Descubra os locais mais icônicos de Paris, desde a Torre Eiffel até o Louvre, e aprenda como aproveitar ao máximo cada visita.",
   date: "10 de Junho, 2023",
   category: "Turismo",
-  image: "/blog/image.png"
-};
+  image: "/blog/image.png",
+  content: "Conteúdo completo do post aqui..."
+}
 
 const recentPosts = [
   {
+    id: 2,
     title: "Um Guia Gastronômico para Paris: Onde Comer e Beber",
     excerpt: "Explore os melhores restaurantes, cafés e bistrôs de Paris, onde você pode saborear desde croissants autênticos até alta gastronomia francesa.",
     date: "5 de Junho, 2023",
     category: "Estilo de Vida",
-    image: "/blog/image2.png"
+    image: "/blog/image2.png",
+    content: "Conteúdo completo do post aqui..."
   },
-  {
-    title: "Passeios Românticos em Paris para Casais",
-    excerpt: "Conheça os lugares mais românticos de Paris, perfeitos para casais. Inclui dicas de piqueniques no Sena, passeios de barco e vistas inesquecíveis.",
-    date: "1 de Junho, 2023",
-    category: "Curiosidade",
-    image: "/blog/image3.png"
-  },
-  {
-    title: "Paris com um Orçamento Limitado: Dicas de Viagem Econômica",
-    excerpt: "Descubra como aproveitar Paris sem gastar muito, com dicas de atrações gratuitas, passeios a pé, e opções de alimentação econômica.",
-    date: "28 de Maio, 2023",
-    category: "Turismo",
-    image: "/blog/image4.png"
-  }
-];
+]
 
 // Defina as categorias dentro do escopo do componente ou em um nível superior no arquivo
 const categories = [
@@ -67,7 +57,7 @@ export default function BlogHomePage() {
             </CardContent>
             <CardFooter>
               <Button asChild>
-                <Link href={`/post/${featuredPost.title.toLowerCase().replace(/ /g, '-')}`}>
+                <Link href={`/blog/${featuredPost.id}`}>
                   Ler mais
                 </Link>
               </Button>
@@ -95,7 +85,7 @@ export default function BlogHomePage() {
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline" asChild>
-                    <Link href={`/post/${post.title.toLowerCase().replace(/ /g, '-')}`}>
+                    <Link href={`/blog/${post.id}`}>
                       Ler mais
                     </Link>
                   </Button>

@@ -37,9 +37,9 @@ const renderIcon = (iconName, color) => {
 };
 
 const TravelsCard = ({ title, text, img, color }) => (
-    <div className="flex flex-col gap-8 p-5">
-        {renderIcon(img, color)}
-        <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-8 p-5 items-center">
+        <Image src={img} alt={title} width={100} height={100} quality={100} className="w-[100px] h-[100px] rounded-xl shadow-2xl" />
+        <div className="flex flex-col gap-5 items-center">
             <h3 className="font-bold">{title}</h3>
             <p>{text}</p>
         </div>
@@ -113,32 +113,44 @@ const GaleryCard = ({ galery }) => (
 )
 
 export default function Home() {
-    const [banner, setBanner] = useState({});
-    const [back, setBack] = useState('');
-    const [carousel, setCarousel] = useState([]);
-    const [travels, setTravels] = useState([]);
-    const [destiny, setDestiny] = useState([]);
-    const [plan, setPLan] = useState({});
-    const [galery, setGalery] = useState([]);
-    const [colorPrimary, setColorPrimary] = useState("");
-    const [colorSecondary, setColorSecondary] = useState("");
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
-        setBanner(jsonData[0]?.banner);
-        setBack(jsonData[0]?.banner?.image || '');
-        setCarousel(jsonData[0]?.banner?.carousel || []);
-        setTravels(jsonData[0]?.travels || []);
-        setDestiny(jsonData[0]?.destiny || []);
-        setPLan(jsonData[0]?.plan || {});
-        setGalery(jsonData[0]?.galery || []);
-        setColorPrimary(jsonData[0]?.colorPrimary ? `#${jsonData[0].colorPrimary.replace('#', '')}` : "");
-        setColorSecondary(jsonData[0]?.colorSecondary ? `#${jsonData[0].colorSecondary.replace('#', '')}` : "");
+        const fetchData = async () => {
+            try {
+                const response = await fetch("https://bucket-data-json.s3.us-east-2.amazonaws.com/data.json");
+                const jsonData = await response.json();
+                setData(jsonData[0]); // Pega o primeiro elemento da lista
+            } catch (error) {
+                console.error("Erro ao buscar os dados do S3:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
     }, []);
+
+    if (loading) {
+        return <p>Carregando...</p>;
+    }
+
+    const {
+        banner,
+        travels,
+        destiny,
+        plan,
+        galery,
+        colorPrimary,
+        colorSecondary,
+    } = data;
 
     return(
         <div className="h-auto flex flex-col overflow-hidden relative bg-backImagePage bg-cover bg-center">
             <Header />
-            <Image src={back} alt="back" width={1000} height={950} quality={100} className="w-full h-[950px] absolute z-10" />
+            <Image src={banner.image} alt="back" width={1000} height={950} quality={100} className="w-full h-[950px] absolute z-10" />
             <div className={`h-[950px] pt-[200px] px-[130px] flex flex-col gap-[110px] text-white z-20 relative bg-black bg-opacity-50`}>
                 <div className="flex flex-col gap-[90px]">
                     <div className="flex flex-col gap-12">
@@ -152,7 +164,7 @@ export default function Home() {
                 <div>
                     <hr />
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
-                        {carousel.map((item) => (
+                        {banner.carousel.map((item) => (
                             <Card key={item.id} title={item.title} text={item.text} id={item.id} />
                         ))}
                     </div>
