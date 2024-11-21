@@ -168,6 +168,7 @@
     "page": "about",
     "id": 2,
     "firstPlace": 
+<<<<<<< HEAD
       {
         "image": "/profile-fotos/Foto.png",
         "title1": "WHO AM I",
@@ -178,5 +179,16 @@
       {
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida purus bibendum eget ut eget magna. Tellus arcu sit ultricies tempor odio aliquam sit. Ultrices blandit vel interdum viverra integer risus, pulvinar. Sed malesuada odio malesuada velit. Donec id faucibus ultricies fringilla pulvinar vulputate mauris, lorem egestas."   
       }
+=======
+    {
+      "title1": "Nossos Parceiros",
+      "title2": "Acompanhe a Companhia Ideal",
+      "text": "Acompanhe o roteiro ideal para o seu destino, com o planejamento de viagem, personalize e facilite a sua jornada.",
+      "image": "/banner.png"
+    },
+    "secondPlace": {
+      "text":"Acompanhe o roteiro ideal para o seu destino, com o planejamento de viagem, personalize e facilite a sua jornada."
+    }
+>>>>>>> cb4d4971a9737b314d6f6399ec24dcecc9b5c11f
   }
 ]
