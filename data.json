@@ -26,17 +26,17 @@
     },
     "travels": [
       {
-        "img": "Airplane",
+        "img": "/banner.png",
         "title": "Planeje e Compartilhe Sua Viagem Perfeita",
         "text": "Escolha o destino, atividades e encontre co-viajantes!"
       },
       {
-        "img": "ShieldCheck",
+        "img": "/banner.png",
         "title": "Explore Paris com Companhia Ideal",
         "text": "Personalize seu roteiro e explore a cidade com novos amigos!"
       },
       {
-        "img": "Faders",
+        "img": "/banner.png",
         "title": "Vivencie Paris com Novos Companheiros",
         "text": "Crie seu roteiro e compartilhe essa aventura única!"
       }
@@ -168,6 +168,18 @@
     "page": "about",
     "id": 2,
     "firstPlace": 
+<<<<<<< HEAD
+      {
+        "image": "/profile-fotos/Foto.png",
+        "title1": "WHO AM I",
+        "title2": "ABOUT ME",
+        "text": "asddddddddddddddjhkjsdhfshdjfskjshkdfjhijsdhfiasudhfaisudhfiausdhfiausdhfiasduhfiasudhfiausdfhaisudhfiausdahfisuadhfiusadhfiusdhfisudhfsiudhfsiufhsiudhfisudhfisudhfsiudhfsiudhfsiudhfsiudhfsiudfhsiudhfiushdfasjkdfbaakjsbdfkabdfkjbasjdfbkajdbfkjabsdfkjbajkdbfkjasbdjfbasjkdbfjkasbdfkjasdbfkjabdsfkjabsdfkjbasdkjfbakjdbfkajsdbfkajsdbfkjasbdfkjadbfkasdbfjkabsdfbweriwuerhgiuweyruiweytuirhkjvbnkjbnklnbodboindfnbldfnblkddnfboidnflkbnkiodfnblkfnb"
+      },
+    "secondPlace":
+      {
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida purus bibendum eget ut eget magna. Tellus arcu sit ultricies tempor odio aliquam sit. Ultrices blandit vel interdum viverra integer risus, pulvinar. Sed malesuada odio malesuada velit. Donec id faucibus ultricies fringilla pulvinar vulputate mauris, lorem egestas."   
+      }
+=======
     {
       "title1": "Nossos Parceiros",
       "title2": "Acompanhe a Companhia Ideal",
@@ -177,5 +189,6 @@
     "secondPlace": {
       "text":"Acompanhe o roteiro ideal para o seu destino, com o planejamento de viagem, personalize e facilite a sua jornada."
     }
+>>>>>>> cb4d4971a9737b314d6f6399ec24dcecc9b5c11f
   }
 ]
