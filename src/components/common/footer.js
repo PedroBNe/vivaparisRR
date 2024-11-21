@@ -96,7 +96,7 @@ export default function Footer() {
     };
 
     return(
-        <footer className="flex flex-col gap-[50px] bg-[#1E1E1E] text-white px-[20px] lg:px-[130px] py-[40px] overflow-x-hidden">
+        <footer className="flex flex-col gap-[50px] bg-[#1E1E1E] text-white px-[20px] xl:px-[130px] py-[40px] overflow-x-hidden">
             {width >= 1024 && (
                 <div className="flex items-center justify-between">
                     <Link href={header.link}>
@@ -124,9 +124,12 @@ export default function Footer() {
                 </div>
             )}
             <hr className="opacity-85" />
-            <div className="flex justify-between items-center text-sm gap-5">
+            <div className="flex flex-col sm:flex-row justify-between items-center text-sm gap-16 sm:gap-8">
                 <p>	&copy;VivaParis 2024 todos os direitos reservados</p>
-                <div>
+                <div className="flex items-center gap-5">
+                    <Link href={''} className="hover:opacity-70 transition ease-in">
+                        Politicas de Privacidade
+                    </Link>
                     <ButtonsFooter />
                 </div>
             </div>

@@ -37,27 +37,27 @@ export default function About() {
 
     return(
         <div className="min-h-screen w-full flex flex-col items-center py-[40px] gap-10 overflow-x-hidden relative bg-backImagePage bg-cover bg-center">
-            <div className="px-[130px]">
+            <div className="p-[20px] xl:px-[130px]">
                 <motion.div
-                    className="rounded-xl p-10 flex justify-center items-center"
+                    className="rounded-xl p-3 lg:p-10 flex justify-center items-center"
                     variants={gradientVariants}
                     animate={currentGradient}
                     transition={{ duration: 2 }}
                 >
-                    <div className="w-full flex gap-[180px] justify-center items-center">
+                    <div className="w-full flex flex-col lg:flex-row gap-[50px] justify-center items-center">
                         <Image src={firstPlace.image} alt="Perfil" width={400} height={427} quality={100} className="w-[367px] h-[427px] "/>
                         <div className="w-fit flex items-center">
                             <div className="w-full flex flex-col items-center">
                                 <h2 className="Itim text-4xl font-semibold">{firstPlace.title2}</h2>
                                 <h1 className="Itim text-6xl mb-4 font-bold text-[#C4C4C4]" >{firstPlace.title1}</h1>
-                                <p className="Roboco w-[45em] break-words whitespace-pre-line mb-10">{firstPlace.text}</p>
+                                <p className="Roboco break-words whitespace-pre-line mb-10">{firstPlace.text}</p>
                                 <MyButton color="#1E1E1E" className="w-[150px] h-[40px] text-white text-sm rounded-lg p-0">Get My CV</MyButton>
                             </div>
                         </div>
                     </div>         
                 </motion.div>
             </div>
-            <div className="px-[130px] flex items-center justify-center text-white text-center font">
+            <div className="p-[20px] xl:px-[130px] flex items-center justify-center text-white text-center font">
                 <p className="bg-[#1E1E1E] p-10 rounded-xl bg-fitaImage bg-cover bg-center">{secondPlace.text}</p>
             </div>
         </div>

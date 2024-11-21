@@ -1,9 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 // Dados de exemplo para os posts do blog
 const featuredPost = {
@@ -42,6 +45,19 @@ const recentPosts = [
 const categories = [
   "Turismo", "Curiosidade", "Estilo de Vida"
 ];
+
+function useWindowSize() {
+  const [width, setWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0);
+
+  useEffect(() => {
+      const handleResize = () => setWidth(window.innerWidth);
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return width;
+}
 
 export default function BlogHomePage() {
   return (
@@ -105,7 +121,7 @@ export default function BlogHomePage() {
           </div>
         </section>
 
-        <aside>
+        <aside className={`${useWindowSize() <= 768 ? "hidden" : ""}`}>
           <Card>
             <CardHeader>
               <CardTitle>Categorias</CardTitle>
