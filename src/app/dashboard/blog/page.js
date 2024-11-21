@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -12,27 +12,80 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-// Dados de exemplo para posts do blog
-const blogPosts = [
-  { id: 1, title: 'Introdução ao React', status: 'Publicado', date: '2023-06-01', category: 'Desenvolvimento' },
-  { id: 2, title: 'Melhores práticas de SEO', status: 'Rascunho', date: '2023-06-05', category: 'Marketing' },
-  { id: 3, title: 'Design responsivo em 2023', status: 'Publicado', date: '2023-05-28', category: 'Design' },
-  { id: 4, title: 'Introdução à LGPD', status: 'Rascunho', date: '2023-06-10', category: 'Legal' },
-]
-
 // Dados de exemplo para categorias
-const categories = ['Desenvolvimento', 'Marketing', 'Design', 'Legal', 'Negócios']
+const categories = ["Turismo", "Curiosidade", "Estilo de Vida"]
 
 export default function BlogPage() {
+  const [blogPosts, setBlogPosts] = useState([])
   const [isAddingPost, setIsAddingPost] = useState(false)
-  const [newPost, setNewPost] = useState({ title: '', content: '', category: '' })
+  const [newPost, setNewPost] = useState({ title: '', content: '', category: '', status: 'Rascunho' })
   const [selectedPost, setSelectedPost] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-  const handleAddPost = () => {
-    // Aqui você adicionaria a lógica para salvar o novo post
-    console.log('Novo post:', newPost)
-    setIsAddingPost(false)
-    setNewPost({ title: '', content: '', category: '' })
+  // Buscar os dados do S3 ao carregar a página
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      setLoading(true)
+      try {
+        const response = await fetch('/api/blogs', { method: 'GET' })
+        if (!response.ok) throw new Error("Erro ao buscar posts do S3")
+        const data = await response.json()
+        setBlogPosts(data)
+      } catch (error) {
+        console.error("Erro ao carregar os posts:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBlogPosts()
+  }, [])
+
+  // Adicionar novo post
+  const handleAddPost = async () => {
+    const newPostWithDate = {
+      ...newPost,
+      id: blogPosts.length + 1,
+      date: new Date().toLocaleDateString('pt-BR'),
+    }
+
+    try {
+      const response = await fetch('/api/blogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPostWithDate),
+      })
+
+      if (!response.ok) throw new Error("Erro ao salvar o post")
+
+      // Atualiza a lista de posts
+      setBlogPosts((prevPosts) => [...prevPosts, newPostWithDate])
+      setIsAddingPost(false)
+      setNewPost({ title: '', content: '', category: '', status: 'Rascunho' })
+    } catch (error) {
+      console.error("Erro ao salvar o post:", error)
+    }
+  }
+
+  // Editar post existente
+  const handleEditPost = async () => {
+    try {
+      const response = await fetch(`/api/blogs`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(selectedPost),
+      })
+
+      if (!response.ok) throw new Error("Erro ao editar o post")
+
+      const updatedPosts = blogPosts.map((post) =>
+        post.id === selectedPost.id ? selectedPost : post
+      )
+      setBlogPosts(updatedPosts)
+      setSelectedPost(null)
+    } catch (error) {
+      console.error("Erro ao editar o post:", error)
+    }
   }
 
   return (
@@ -41,8 +94,6 @@ export default function BlogPage() {
       <Tabs defaultValue="posts" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="posts">Posts</TabsTrigger>
-          <TabsTrigger value="categories">Categorias</TabsTrigger>
-          <TabsTrigger value="stats">Estatísticas</TabsTrigger>
         </TabsList>
         <TabsContent value="posts">
           <Card>
@@ -69,14 +120,15 @@ export default function BlogPage() {
                           id="title"
                           className="col-span-3"
                           value={newPost.title}
-                          onChange={(e) => setNewPost({...newPost, title: e.target.value})}
+                          onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+                          required
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="category" className="text-right">Categoria</Label>
                         <Select
                           value={newPost.category}
-                          onValueChange={(value) => setNewPost({...newPost, category: value})}
+                          onValueChange={(value) => setNewPost({ ...newPost, category: value })}
                         >
                           <SelectTrigger className="col-span-3">
                             <SelectValue placeholder="Selecione uma categoria" />
@@ -95,7 +147,8 @@ export default function BlogPage() {
                           className="col-span-3"
                           rows={10}
                           value={newPost.content}
-                          onChange={(e) => setNewPost({...newPost, content: e.target.value})}
+                          onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+                          required
                         />
                       </div>
                     </div>
@@ -105,169 +158,41 @@ export default function BlogPage() {
                   </DialogContent>
                 </Dialog>
               </div>
-              <ScrollArea className="h-[400px]">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Título</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Data</TableHead>
-                      <TableHead>Categoria</TableHead>
-                      <TableHead>Ações</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {blogPosts.map((post) => (
-                      <TableRow key={post.id}>
-                        <TableCell>{post.title}</TableCell>
-                        <TableCell>{post.status}</TableCell>
-                        <TableCell>{post.date}</TableCell>
-                        <TableCell>{post.category}</TableCell>
-                        <TableCell>
-                          <Button variant="outline" size="sm" onClick={() => setSelectedPost(post)}>Editar</Button>
-                        </TableCell>
+              {loading ? (
+                <p>Carregando posts...</p>
+              ) : (
+                <ScrollArea className="h-[400px]">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Título</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Data</TableHead>
+                        <TableHead>Categoria</TableHead>
+                        <TableHead>Ações</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </ScrollArea>
+                    </TableHeader>
+                    <TableBody>
+                      {blogPosts.map((post) => (
+                        <TableRow key={post.id}>
+                          <TableCell>{post.title}</TableCell>
+                          <TableCell>{post.status}</TableCell>
+                          <TableCell>{post.date}</TableCell>
+                          <TableCell>{post.category}</TableCell>
+                          <TableCell>
+                            <Button variant="outline" size="sm" onClick={() => setSelectedPost(post)}>Editar</Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </ScrollArea>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
-        <TabsContent value="categories">
-          <Card>
-            <CardHeader>
-              <CardTitle>Categorias</CardTitle>
-              <CardDescription>Gerencie as categorias do seu blog</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex justify-between mb-4">
-                <Input className="max-w-sm" placeholder="Nova categoria..." />
-                <Button>Adicionar Categoria</Button>
-              </div>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Nome da Categoria</TableHead>
-                    <TableHead>Número de Posts</TableHead>
-                    <TableHead>Ações</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {categories.map((category, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{category}</TableCell>
-                      <TableCell>{Math.floor(Math.random() * 10)}</TableCell>
-                      <TableCell>
-                        <Button variant="outline" size="sm">Editar</Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="stats">
-          <Card>
-            <CardHeader>
-              <CardTitle>Estatísticas do Blog</CardTitle>
-              <CardDescription>Visualize as estatísticas do seu blog</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Total de Posts</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-4xl font-bold">{blogPosts.length}</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Categorias</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-4xl font-bold">{categories.length}</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Posts Publicados</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-4xl font-bold">{blogPosts.filter(post => post.status === 'Publicado').length}</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Rascunhos</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-4xl font-bold">{blogPosts.filter(post => post.status === 'Rascunho').length}</p>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+        {/* Restante das abas como Categorias e Estatísticas */}
       </Tabs>
-      {selectedPost && (
-        <Dialog open={!!selectedPost} onOpenChange={() => setSelectedPost(null)}>
-          <DialogContent className="sm:max-w-[625px]">
-            <DialogHeader>
-              <DialogTitle>Editar Post</DialogTitle>
-              <DialogDescription>Edite os detalhes do post selecionado.</DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-title" className="text-right">Título</Label>
-                <Input
-                  id="edit-title"
-                  className="col-span-3"
-                  value={selectedPost.title}
-                  onChange={(e) => setSelectedPost({...selectedPost, title: e.target.value})}
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-category" className="text-right">Categoria</Label>
-                <Select
-                  value={selectedPost.category}
-                  onValueChange={(value) => setSelectedPost({...selectedPost, category: value})}
-                >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="Selecione uma categoria" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category} value={category}>{category}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-status" className="text-right">Status</Label>
-                <Select
-                  value={selectedPost.status}
-                  onValueChange={(value) => setSelectedPost({...selectedPost, status: value})}
-                >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="Selecione o status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Publicado">Publicado</SelectItem>
-                    <SelectItem value="Rascunho">Rascunho</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button onClick={() => setSelectedPost(null)}>Salvar Alterações</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
     </div>
   )
 }
