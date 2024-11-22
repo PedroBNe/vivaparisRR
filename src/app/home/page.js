@@ -10,7 +10,6 @@ import MyButton from "@/components/buttons";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import French from "@/assets/Frech";
-import jsonData from '/data.json';
 import Header from "@/components/common/header";
 import Idea from "@/assets/idea";
 import Map from "@/assets/map";

@@ -54,6 +54,32 @@ export async function GET() {
   }
 }
 
+export async function PUT(req) {
+  try {
+    const updatedBlog = await req.json();
+    const blogs = await fetchBlogsFromS3();
+
+    const blogIndex = blogs.findIndex((blog) => blog.id === updatedBlog.id);
+    if (blogIndex === -1) {
+      return new Response(JSON.stringify({ error: "Blog não encontrado" }), { status: 404 });
+    }
+
+    blogs[blogIndex] = updatedBlog; // Atualiza o post
+    await saveBlogsToS3(blogs);
+
+    return new Response(JSON.stringify({ message: "Blog atualizado com sucesso!" }), {
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Erro ao atualizar o blog no S3:", error);
+    return new Response(
+      JSON.stringify({ error: "Erro ao atualizar o blog no S3" }),
+      { status: 500 }
+    );
+  }
+}
+
+
 export async function POST(req) {
   try {
     const newBlog = await req.json();
@@ -67,6 +93,36 @@ export async function POST(req) {
     console.error("Erro ao salvar o blog no S3:", error);
     return new Response(
       JSON.stringify({ error: "Erro ao salvar o blog no S3" }),
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req) {
+  try {
+    const { id } = await req.json();
+    console.log("ID recebido para exclusão:", id);
+
+    const blogs = await fetchBlogsFromS3();
+    console.log("Blogs atuais no S3:", blogs);
+
+    const filteredBlogs = blogs.filter((blog) => blog.id !== id);
+
+    if (blogs.length === filteredBlogs.length) {
+      console.log("Nenhum blog encontrado com o ID:", id);
+      return new Response(JSON.stringify({ error: "Blog não encontrado" }), { status: 404 });
+    }
+
+    await saveBlogsToS3(filteredBlogs);
+
+    console.log("Blogs atualizados após exclusão:", filteredBlogs);
+    return new Response(JSON.stringify({ message: "Blog excluído com sucesso!" }), {
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Erro ao excluir o blog no S3:", error);
+    return new Response(
+      JSON.stringify({ error: "Erro ao excluir o blog no S3" }),
       { status: 500 }
     );
   }
