@@ -5,11 +5,12 @@ export async function POST(req) {
   const body = await req.json();
   const { username, password } = body;
 
-  if (
-    username === process.env.NEXT_PUBLIC_USERNAME &&
-    password === process.env.NEXT_PUBLIC_PASSWORD
-  ) {
-    const token = jwt.sign({ username }, process.env.JWT_SECRET, {
+  // Use variáveis de ambiente com fallback para valores padrão
+  const defaultUsername = process.env.NEXT_PUBLIC_USERNAME || "admin";
+  const defaultPassword = process.env.NEXT_PUBLIC_PASSWORD || "123456";
+
+  if (username === defaultUsername && password === defaultPassword) {
+    const token = jwt.sign({ username }, process.env.JWT_SECRET || "default-secret", {
       expiresIn: "1h",
     });
 
