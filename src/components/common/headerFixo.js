@@ -39,18 +39,21 @@ function useWindowSize() {
 
 export default function HeaderFixo() {
     const windowSize = useWindowSize();
-    const pathname = usePathname();
+    const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);
     const [hidden, setHidden] = useState(true);
 
-    const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);
-
-    // Rotas onde o Header não deve aparecer
+    const pathname = usePathname();
     const hideHeaderRoutes = ["/home", "/"]; 
 
     if (hideHeaderRoutes.includes(pathname) || pathname.startsWith('/dashboard')) return null;
 
+
+    const handleScroll = () => (document.body.style.position = "sticky"); // Can scroll down
+
+    const handleNoScroll = () => (document.body.style.position = "fixed"); // Can not scroll down
+
     return (
-        <header  className="w-full h-[12vh] lg:px-[130px] bg-[#1E1E1E] flex justify-between items-center text-white">
+        <header className="w-full h-[12vh] p-[20px] xl:px-[130px] bg-[#1E1E1E] flex justify-between items-center text-white">
             <Link href={header.link}>
                 <Image src={logo} alt="logo" width={150} height={80} />
             </Link>
@@ -73,15 +76,15 @@ export default function HeaderFixo() {
                     <button onClick={() => {setHidden(!hidden), handleNoScroll()}}>
                         <Menu  />
                     </button>
-                    <nav className={`${hidden ? 'hidden' : ''} flex flex-col items-center justify-center gap-4 absolute bg-[#1E1E1E] w-screen h-screen top-0 left-0`}>
+                    <nav className={`${hidden ? 'hidden' : ''} flex flex-col items-center justify-center gap-4 absolute z-30 bg-[#1E1E1E] w-screen h-screen top-0 left-0`}>
                         <button onClick={() => {setHidden(!hidden), handleScroll()}} className="absolute right-4 top-4 text-3xl font-bold">x</button>
                         <ul className="flex flex-col items-center lg:items-start lg:flex-row gap-12 font-semibold">
                             {nav.map((item, index) => (
-                                <li key={index}>
+                                <li key={index} onClick={() => {setHidden(!hidden), handleScroll()}}>
                                     <Link href={item.link} className="hover:opacity-70 transition ease-in">{item.text}</Link>
                                 </li>
                             ))}
-                            <li>
+                            <li onClick={() => {setHidden(!hidden), handleScroll()}}>
                                 <Link href="" className="border-[1px] p-2 px-4 rounded-3xl hover:bg-white hover:text-black transition ease-in border-white">Contato</Link>
                             </li>
                         </ul>

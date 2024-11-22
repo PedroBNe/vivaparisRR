@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TowerIcon = ({ stroke = "#000000", width = 80, height = 80 }) => (
+const Airplane = ({ stroke = "#000000", width = 80, height = 80 }) => (
     <svg
         version="1.1"
         id="Icons"
@@ -27,4 +27,4 @@ const TowerIcon = ({ stroke = "#000000", width = 80, height = 80 }) => (
     </svg>
 );
 
-export default TowerIcon;
+export default Airplane;

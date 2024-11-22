@@ -1,20 +1,36 @@
-"use client"
+'use client'
 
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import Image from 'next/image';
+import Link from 'next/link'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 // Defina as categorias dentro do escopo do componente ou em um nível superior no arquivo
 const categories = ["Turismo", "Curiosidade", "Estilo de Vida"];
+
+function useWindowSize() {
+  const [width, setWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0);
+
+  useEffect(() => {
+      const handleResize = () => setWidth(window.innerWidth);
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return width;
+}
 
 export default function BlogHomePage() {
   const [blogs, setBlogs] = useState([]);
   const [featuredPost, setFeaturedPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const windowWidth = useWindowSize();
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -114,6 +130,7 @@ export default function BlogHomePage() {
           </div>
         </section>
 
+        {windowWidth > 768 && (
         <aside>
           <Card>
             <CardHeader>
@@ -144,6 +161,7 @@ export default function BlogHomePage() {
             </CardFooter>
           </Card>
         </aside>
+        )}
       </main>
     </div>
   );

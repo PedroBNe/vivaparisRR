@@ -50,9 +50,9 @@ export default function About() {
 
     return (
         <div className="min-h-screen w-full flex flex-col items-center py-[40px] gap-10 overflow-x-hidden relative bg-backImagePage bg-cover bg-center">
-            <div className="px-[130px]">
+            <div className="p-[20px] xl:px-[130px]">
                 <motion.div
-                    className="rounded-xl p-10 flex justify-center items-center"
+                    className="rounded-xl p-3 lg:p-10 flex justify-center items-center"
                     variants={gradientVariants}
                     animate={currentGradient}
                     transition={{ duration: 2 }}

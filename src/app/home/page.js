@@ -13,15 +13,47 @@ import French from "@/assets/Frech";
 import Header from "@/components/common/header";
 import Idea from "@/assets/idea";
 import Map from "@/assets/map";
-import useWindowSize from "@/components/getwid";
+import useWindowSize from "@/components/getWindow";
 
 const Card = ({ title, text, id }) => (
     <div className="flex flex-col items-center lg:items-start gap-5 p-5">
-        <div>0{id}</div>
-        <h3 className="font-bold">{title}</h3>
-        <p>{text}</p>
+        <div className="w-full">0{id}</div>
+        <h3 className="w-full font-bold">{title}</h3>
+        <p className="w-full">{text}</p>
     </div>
 )
+
+const Carousel = ({carousel}) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, jsonData[0].banner.carousel.length - 1));
+        }, 5000); // Altere o intervalo de 5 segundos para 1 segundo
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div className="w-full h-[200px] sm:h-[250px] flex justify-center items-center">
+            <div className="w-full flex justify-center items-center relative">
+                {carousel.map((item, index) => (
+                    <div
+                    key={index}
+                    className={`w-full h-full flex items-center justify-center transition duration-1000 ease-in-out absolute ${index === currentIndex ? "opacity-100" : "opacity-0"}`}
+                    >
+                        <div className="w-full h-full bg-black bg-opacity-40 flex flex-col gap-4 items-center justify-end relative z-20">
+                            <div className="flex flex-col items-center">
+                                <h3 className="font-bold text-white">{item.title}</h3>
+                                <p className="text-white">{item.text}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))} 
+            </div>
+        </div>
+    )
+}
 
 const renderIcon = (iconName, color) => {
     switch (iconName) {
@@ -68,8 +100,13 @@ const DestinationCard = ({ destination }) => {
     }
 
     useEffect(() => {
-        window.addEventListener('resize', adjust())
-    }, []);
+        const handleResize = () => adjust();
+    
+        window.addEventListener("resize", handleResize);
+        adjust(); // Chamar inicialmente
+    
+        return () => window.removeEventListener("resize", handleResize);
+    }, [windowWidth]);
 
     return (
         <div className="w-full flex flex-col gap-5 relative">
@@ -159,7 +196,7 @@ export default function Home() {
         galery,
         colorPrimary,
         colorSecondary,
-    } = data;
+    } = data || {};
 
     return(
         <div className="h-auto flex flex-col overflow-x-hidden relative bg-backImagePage bg-cover bg-center">
@@ -183,9 +220,12 @@ export default function Home() {
                         ))}
                     </div>
                 </div>
+                {width <= 1024 && (
+                    <Carousel carousel={carousel} />
+                )}
             </div>
             <div className="w-full py-[35px] flex items-end bg-[#1E1E1E] text-[#D9D9D9] relative">
-                <div className="w-[105%] h-[8vh] flex items-center justify-around absolute left-[-10px] top-0 font-semibold text-3xl rotate-2 z-20" style={{ backgroundColor: colorSecondary }}>
+                <div className="w-[105%] h-[8vh] flex gap-5 items-center justify-around absolute left-[-10px] top-0 font-semibold text-3xl rotate-2 z-20" style={{ backgroundColor: colorSecondary }}>
                     <p>Explore</p>
                     <p>Descubra</p>
                     <p>Aprecie</p>
@@ -207,16 +247,16 @@ export default function Home() {
             <div className="px-[20px] lg:px-[130px] flex flex-col gap-10 font pb-[40px]" style={{ color: colorSecondary }}>
                 <div className="flex flex-col gap-4">
                     <p className="text-lg font-semibold">Para onde voce gostaria de ir?</p>
-                    <div className="flex flex-col gap-[30px] lg:flex-row items-center lg:items-start lg:justify-between">
+                    <div className="flex flex-col gap-[30px] xl:flex-row items-center lg:items-start lg:justify-between">
                         <h2 className="text-5xl font-bold">Deixe seus planos conosco e vá às alturas</h2>
                         <MyButton>
                             Saiba mais
                         </MyButton>
                     </div>
                 </div>
-                <div className="w-full flex flex-col lg:flex-row justify-center items-center gap-[70px] p-5">
+                <div className="w-full flex flex-col xl:flex-row justify-center items-center gap-[70px] p-5">
                     <Image src={plan.image} alt="viagem" width={550} height={480} quality={100} className="w-[550px] h-[480px] rounded-xl shadow-2xl"/>
-                    <div className="w-full lg:w-[50%] flex flex-col gap-[80px] p-0 lg:p-10">
+                    <div className="w-full xl:w-[50%] flex flex-col gap-[80px] p-0 xl:p-10">
                         <div className="flex flex-col gap-7">
                             <Map width={80} height={80} fill={colorSecondary} />
                             <h2 className="text-4xl font-semibold">{plan.title1}</h2>
@@ -262,5 +302,6 @@ export default function Home() {
                 </Link>
             </div>
         </div>
+        
     )
 }
