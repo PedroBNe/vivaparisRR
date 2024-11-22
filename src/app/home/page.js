@@ -28,14 +28,14 @@ const Carousel = ({carousel}) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, jsonData[0].banner.carousel.length - 1));
+            setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, carousel.length - 1));
         }, 5000); // Altere o intervalo de 5 segundos para 1 segundo
 
         return () => clearInterval(interval);
     }, []);
 
     return (
-        <div className="w-full h-[200px] sm:h-[250px] flex justify-center items-center">
+        <div className="w-full h-[360px] sm:h-[400px] md:h-[350px] flex justify-center items-center">
             <div className="w-full flex justify-center items-center relative">
                 {carousel.map((item, index) => (
                     <div
@@ -54,19 +54,6 @@ const Carousel = ({carousel}) => {
         </div>
     )
 }
-
-const renderIcon = (iconName, color) => {
-    switch (iconName) {
-        case "Airplane":
-            return <Airplane stroke={color} />;
-        case "ShieldCheck":
-            return <ShieldCheck stroke={color} />;
-        case "Faders":
-            return <Faders fill={color} />;
-        default:
-            return null;
-    }
-};
 
 const TravelsCard = ({ title, text, img, color }) => (
     <div className="flex flex-col gap-8 p-5 items-center">
@@ -90,11 +77,11 @@ const DestinationCard = ({ destination }) => {
         setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
     };
 
-    const windowWidth = useWindowSize();
+    const width = useWindowSize();
     function adjust() {
-        if (windowWidth <= 425) return setBool(9);
+        if (width <= 425) return setBool(9);
 
-        if (windowWidth <= 1024 && windowWidth > 425) return setBool(8);
+        if (width <= 1024 && width > 425) return setBool(8);
 
         return setBool(5);
     }
@@ -106,7 +93,7 @@ const DestinationCard = ({ destination }) => {
         adjust(); // Chamar inicialmente
     
         return () => window.removeEventListener("resize", handleResize);
-    }, [windowWidth]);
+    }, [width]);
 
     return (
         <div className="w-full flex flex-col gap-5 relative">
@@ -144,7 +131,7 @@ const DestinationCard = ({ destination }) => {
 };
 
 const GaleryCard = ({ galery }) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
         {galery.map((galery, index) => (
             <div key={index} className="w-[350px] h-[350px] p-2 rounded-xl flex-shrink-0 relative text-white">
                 <div className="w-[350px] h-[350px] bg-black text-start rounded-xl p-8 bg-opacity-40 flex flex-col gap-2 items-start justify-end relative z-20">
@@ -164,9 +151,9 @@ const GaleryCard = ({ galery }) => (
 );
 
 export default function Home() {
+    const width = useWindowSize();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -202,7 +189,7 @@ export default function Home() {
         <div className="h-auto flex flex-col overflow-x-hidden relative bg-backImagePage bg-cover bg-center">
             <Header />
             <Image src={banner.image} alt="back" width={1000} height={950} quality={100} className="w-full h-[950px] absolute z-10" />
-            <div className={`h-[950px] pt-[200px] px-[130px] flex flex-col gap-[110px] text-white z-20 relative bg-black bg-opacity-50`}>
+            <div className={`h-[950px] pt-[200px] p-[20px] xl:px-[130px] flex flex-col gap-[110px] text-white z-20 relative bg-black bg-opacity-50`}>
                 <div className="flex flex-col gap-[90px]">
                     <div className="flex flex-col gap-12">
                         <h1 className="w-full xl:w-[65%] items-center text-3xl lg:text-6xl font-bold">{banner.title}</h1>
@@ -212,19 +199,24 @@ export default function Home() {
                         <MyButton color={colorPrimary}>Saiba mais</MyButton>
                     </Link>
                 </div>
-                <div className="w-full">
-                    <hr />
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
-                        {banner.carousel.map((item) => (
-                            <Card key={item.id} title={item.title} text={item.text} id={item.id} />
-                        ))}
+                {width > 1024 && (
+                    <div className="w-full">
+                        <hr />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
+                            {banner.carousel.map((item) => (
+                                <Card key={item.id} title={item.title} text={item.text} id={item.id} />
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
                 {width <= 1024 && (
-                    <Carousel carousel={carousel} />
+                    <div className="w-full">
+                        <hr />
+                        <Carousel carousel={banner.carousel} />
+                    </div>
                 )}
             </div>
-            <div className="w-full py-[35px] flex items-end bg-[#1E1E1E] text-[#D9D9D9] relative">
+            <div className="w-full py-[35px] flex justify-center items-center bg-[#1E1E1E] text-[#D9D9D9] relative">
                 <div className="w-[105%] h-[8vh] flex gap-5 items-center justify-around absolute left-[-10px] top-0 font-semibold text-3xl rotate-2 z-20" style={{ backgroundColor: colorSecondary }}>
                     <p>Explore</p>
                     <p>Descubra</p>
@@ -233,18 +225,18 @@ export default function Home() {
                     <p>Vivencie</p>
                 </div>
                 <div className="w-full h-[8vh] absolute top-0 z-10" style={{ backgroundColor: colorPrimary }}></div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 py-[35px] pt-[80px] px-[50px] lg:px-[130px]">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 py-[35px] pt-[80px] px-[20px] lg:px-[130px]">
                     {travels.map((item) => (
                         <TravelsCard key={item.id} title={item.title} text={item.text} img={item.img} color={colorPrimary} />
                     ))}
                 </div>
             </div>
-            <div className="px-[20px] lg:px-[130px] py-[120px] flex flex-col gap-4 font" style={{ color: colorSecondary }}>
+            <div className="px-[20px] xl:px-[130px] py-[120px] flex flex-col gap-4 font" style={{ color: colorSecondary }}>
                 <p className="text-lg font-semibold">Para onde voce gostaria de ir?</p>
                 <h2 className="text-5xl font-bold">Destinos Populares</h2>
                 <DestinationCard color={colorSecondary} destination={destiny} />
             </div>
-            <div className="px-[20px] lg:px-[130px] flex flex-col gap-10 font pb-[40px]" style={{ color: colorSecondary }}>
+            <div className="px-[20px] xl:px-[130px] flex flex-col gap-10 font pb-[40px]" style={{ color: colorSecondary }}>
                 <div className="flex flex-col gap-4">
                     <p className="text-lg font-semibold">Para onde voce gostaria de ir?</p>
                     <div className="flex flex-col gap-[30px] xl:flex-row items-center lg:items-start lg:justify-between">
@@ -302,6 +294,5 @@ export default function Home() {
                 </Link>
             </div>
         </div>
-        
     )
 }
