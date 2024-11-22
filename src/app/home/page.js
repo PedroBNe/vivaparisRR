@@ -100,8 +100,13 @@ const DestinationCard = ({ destination }) => {
     }
 
     useEffect(() => {
-        window.addEventListener('resize', adjust())
-    }, []);
+        const handleResize = () => adjust();
+    
+        window.addEventListener("resize", handleResize);
+        adjust(); // Chamar inicialmente
+    
+        return () => window.removeEventListener("resize", handleResize);
+    }, [windowWidth]);
 
     return (
         <div className="w-full flex flex-col gap-5 relative">
@@ -191,7 +196,7 @@ export default function Home() {
         galery,
         colorPrimary,
         colorSecondary,
-    } = data;
+    } = data || {};
 
     return(
         <div className="h-auto flex flex-col overflow-x-hidden relative bg-backImagePage bg-cover bg-center">

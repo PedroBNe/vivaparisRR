@@ -30,6 +30,8 @@ export default function BlogHomePage() {
   const [recentPosts, setRecentPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const windowWidth = useWindowSize();
+
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -128,7 +130,8 @@ export default function BlogHomePage() {
           </div>
         </section>
 
-        <aside className={`${useWindowSize() <= 768 ? "hidden" : ""}`}>
+        {windowWidth > 768 && (
+        <aside>
           <Card>
             <CardHeader>
               <CardTitle>Categorias</CardTitle>
@@ -158,6 +161,7 @@ export default function BlogHomePage() {
             </CardFooter>
           </Card>
         </aside>
+        )}
       </main>
     </div>
   );
