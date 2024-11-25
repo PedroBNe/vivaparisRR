@@ -69,6 +69,6 @@ export default async function DashboardLayout({ children }) {
     );
   } catch (err) {
     console.error("Erro na autenticação:", err);
-    return <p>Você não está autenticado. Faça login.</p>;
+    return <p>Você não está autenticado. Faça login. {err}</p>;
   }
 }
