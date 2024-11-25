@@ -39,7 +39,7 @@ function useWindowSize() {
 
 export default function HeaderFixo() {
     const windowSize = useWindowSize();
-    const [logo, setLogo] = useState(`/logo.png?${Date.now()}`);
+    const [logo, setLogo] = useState(`https://bucket-data-json.s3.us-east-2.amazonaws.com/logo.png`);
     const [hidden, setHidden] = useState(true);
 
     const pathname = usePathname();
