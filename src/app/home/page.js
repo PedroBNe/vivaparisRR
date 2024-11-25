@@ -77,19 +77,12 @@ const DestinationCard = ({ destination }) => {
         setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
     };
 
-    const width = useWindowSize();
-    function adjust() {
-        if (width <= 425) return setBool(9);
-
-        if (width <= 1024 && width > 425) return setBool(8);
-
-        return setBool(5);
-    }
+    const windowWidth = useWindowSize();
 
     useEffect(() => {
         const handleResize = () => {
-            if (width <= 425) setBool(9);
-            else if (width <= 1024 && width > 425) setBool(8);
+            if (windowWidth <= 425) setBool(9);
+            else if (windowWidth <= 1024 && windowWidth > 425) setBool(8);
             else setBool(5);
         };
     
@@ -97,7 +90,7 @@ const DestinationCard = ({ destination }) => {
         handleResize(); // Chamar inicialmente
     
         return () => window.removeEventListener("resize", handleResize);
-    }, [width]);
+    }, [windowWidth]);
     
 
     return (
@@ -156,7 +149,8 @@ const GaleryCard = ({ galery }) => (
 );
 
 export default function Home() {
-    const width = useWindowSize();
+    const windowWidth = useWindowSize();
+
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -204,7 +198,7 @@ export default function Home() {
                         <MyButton color={colorPrimary}>Saiba mais</MyButton>
                     </Link>
                 </div>
-                {width > 1024 && (
+                {windowWidth > 1024 && (
                     <div className="w-full">
                         <hr />
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
@@ -214,7 +208,7 @@ export default function Home() {
                         </div>
                     </div>
                 )}
-                {width <= 1024 && (
+                {windowWidth <= 1024 && (
                     <div className="w-full">
                         <hr />
                         <Carousel carousel={banner.carousel} />
