@@ -29,10 +29,10 @@ const Carousel = ({carousel}) => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, carousel.length - 1));
-        }, 5000); // Altere o intervalo de 5 segundos para 1 segundo
-
+        }, 5000);
+    
         return () => clearInterval(interval);
-    }, []);
+    }, [carousel.length]);    
 
     return (
         <div className="w-full h-[360px] sm:h-[400px] md:h-[350px] flex justify-center items-center">
@@ -87,13 +87,18 @@ const DestinationCard = ({ destination }) => {
     }
 
     useEffect(() => {
-        const handleResize = () => adjust();
+        const handleResize = () => {
+            if (width <= 425) setBool(9);
+            else if (width <= 1024 && width > 425) setBool(8);
+            else setBool(5);
+        };
     
         window.addEventListener("resize", handleResize);
-        adjust(); // Chamar inicialmente
+        handleResize(); // Chamar inicialmente
     
         return () => window.removeEventListener("resize", handleResize);
     }, [width]);
+    
 
     return (
         <div className="w-full flex flex-col gap-5 relative">
