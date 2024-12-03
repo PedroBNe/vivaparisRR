@@ -49,44 +49,29 @@ export default function About() {
     }, []);
 
     return (
-        <div className="min-h-screen w-full flex flex-col items-center py-[40px] gap-10 overflow-x-hidden relative bg-backImagePage bg-cover bg-center">
-            <div className="p-[20px] xl:px-[130px]">
-                <motion.div
-                    className="rounded-xl p-3 lg:p-10 flex justify-center items-center"
-                    variants={gradientVariants}
-                    animate={currentGradient}
-                    transition={{ duration: 2 }}
-                >
-                    <div className="w-full flex gap-[180px] justify-center items-center">
-                        {firstPlace.image && (
-                            <Image
-                                src={firstPlace.image}
-                                alt="Perfil"
-                                width={400}
-                                height={427}
-                                quality={100}
-                                className="w-[367px] h-[427px]"
-                            />
-                        )}
-                        <div className="w-fit flex items-center">
-                            <div className="w-full flex flex-col items-center">
-                                <h2 className="Itim text-4xl font-semibold">{firstPlace.title2}</h2>
-                                <h1 className="Itim text-6xl mb-4 font-bold text-[#C4C4C4]">{firstPlace.title1}</h1>
-                                <p className="Roboco w-[45em] break-words whitespace-pre-line mb-10">
-                                    {firstPlace.text}
-                                </p>
-                                <MyButton color="#1E1E1E" className="w-[150px] h-[40px] text-white text-sm rounded-lg p-0">
-                                    Ver mais
-                                </MyButton>
-                            </div>
-                        </div>
+        <div className="h-auto w-full flex flex-col items-center py-[40px] px-[20px] xl:px-[130px] gap-10 overflow-x-hidden relative bg-backImagePage bg-cover bg-center">
+            <div className="w-full min-h-screen flex flex-col items-center xl:items-start relative overflow-hidden">
+                {firstPlace.image && (
+                    <div className="xl:absolute right-0  top-[150px] z-10">
+                        <Image
+                            src={firstPlace.image}
+                            alt="Perfil"
+                            width={400}
+                            height={427}
+                            quality={100}
+                            className="w-[367px] sm:w-[567px] h-[427px] sm:h-[627px]"
+                        />
                     </div>
-                </motion.div>
-            </div>
-            <div className="px-[130px] flex items-center justify-center text-white text-center font">
-                <p className="bg-[#1E1E1E] p-10 rounded-xl bg-fitaImage bg-cover bg-center">
-                    {secondPlace.text}
-                </p>
+                )}
+                <div className="w-full lg:w-[90%] flex flex-col items-center md:items-start bg-transparent xl:items-start mt-5 xl:mt-0 z-20">
+                    <h2 className="font-bold text-3xl xl:text-8xl">{firstPlace.title2}</h2>
+                    <h2 className="font-bold text-xl xl:text-3xl dancing-script">{firstPlace.title1}</h2>
+                </div>
+                <div className="md:w-[80%] xl:w-[50%] h-auto flex flex-col items-center justify-between gap-5 mt-14">
+                    <p className="w-fit">{firstPlace.text}</p>
+                    <hr className="w-[80%] border-[1px] border-[#1E1E1E]" />
+                    <p className="w-fit">{secondPlace.text}</p>
+                </div>
             </div>
         </div>
     );
